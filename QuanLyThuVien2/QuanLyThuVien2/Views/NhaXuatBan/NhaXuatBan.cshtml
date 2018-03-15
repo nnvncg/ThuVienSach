@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewBag.Title = "Quản lý nhà xuất bản";
+    Layout = "~/Views/Layout/_LayoutAdmin.cshtml";
+}
+
+<div ng-controller="Sach">
+    <h1 class="text-center"><strong> Quản lý nhà xuất bản</strong></h1>
+    <hr />
+    <input type="text" class="form-control" ng-model="searchInput" placeholder="Nhập tên cần tìm.." />
+    <table class="table">
+        <thead class="thead">
+            <tr>
+                <th scope="col" style="width:4%">#</th>
+                <th scope="col">Tên</th>
+                <th scope="col">Địa chỉ</th>
+                <th scope="col">Điện thoại</th>
+                <th scope="col">
+                    <button ng-click="NXBAdd()" class="btn btn-link" data-toggle="modal" data-target=".bd-example-modal-lg" title="Thêm mới sản phẩm">Thêm mới</button>
+                </th>
+            </tr>
+        </thead>
+        <tbody ng-repeat="n in NhaXB|filter:searchInput|range:(selectedPage-1)*pageSize|limitTo:pageSize">
+            <tr>
+                <th scope="row">{{(selectedPage-1)*pageSize + $index +1}}</th>
+                <td ng-switch="n.TenNXB.length>50">{{n.TenNXB.substring(0,50)}}<p ng-switch-when="true">...</p></td>
+                <td>{{n.DiaChi}}</td>
+                <td>{{n.DienThoai}}</td>
+                <td class="d-inline">
+                    <button class="fa fa-pencil-square-o btn btn-outline-success" aria-hidden="true" ng-click="XemChiTietNXB(n.MaNXB,2)" title="Sửa sản phẩm" data-toggle="modal" data-target=".bd-example-modal-lg"></button>&nbsp;
+                    <button class="fa fa-trash-o btn btn-outline-success" ng-click="XemChiTietNXB(n.MaNXB,1)" aria-hidden="true" title="Xóa sản phẩm." data-toggle="modal" data-target=".bd-example-modal-lg"></button>
+                </td>
+            </tr>
+        </tbody>
+        <tr>
+            <td colspan="5" class="ml-5">
+                <a class="btn btn-light" ng-class="PagePrevActive()" ng-click="goToPrev()"><small><<<</small></a>
+                <a class="btn btn-info" ng-class="PageActive($index+1)" ng-repeat="n in data=(NhaXB|filter:searchInput|pageCount:pageSize)" ng-click="toPage($index+1)">{{$index+1}}</a>
+                <a class="btn btn-light" ng-class="PageNextActive()" ng-click="goToNext()"><small>>>></small></a>
+            </td>
+        </tr>
+    </table>
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-content">
+                    <br />
+                    <h2 class="text-center"><strong>{{TieuDe}}</strong></h2>
+                </div>
+                <div class="modal-body pre-scrollable" ng-hide="ThemMoi">
+                    <form name="frmAdd">
+                        <div class="form-group">
+                            <label for="">Tên nhà xuất bản</label>
+                            <input type="text" required ng-model="DataNew.TenNXB" class="form-control" placeholder="Điền thông tin..">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Địa chỉ</label>
+                            <input type="text" required ng-model="DataNew.DiaChi" class="form-control" placeholder="Điền thông tin..">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Số điện thoại</label>
+                            <input type="text" required ng-model="DataNew.DienThoai" class="form-control" placeholder="Điền thông tin..">
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-body pre-scrollable" ng-hide="Sua">
+                    <form name="frmEdit">
+                        <div class="form-group">
+                            <label for="">Tên nhà xuất bản</label>
+                            <input type="text" required ng-model="dataEdit.TenNXB" class="form-control" placeholder="Điền thông tin..">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Địa chỉ</label>
+                            <input type="text" required ng-model="dataEdit.DiaChi" class="form-control" placeholder="Điền thông tin..">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Số điện thoại</label>
+                            <input type="text" required ng-model="dataEdit.DienThoai" class="form-control" placeholder="Điền thông tin..">
+                        </div>
+                    </form>
+                </div>
+                @*xóa*@
+                <div class="modal-body pre-scrollable" ng-hide="Xoa">
+                    <p> Bạn có chắc muốn xóa thông tin nhà xuất bản {{dataDelete.TenNXB}}</p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-hide="Xoa" data-dismiss="modal" ng-click="XoaNXB(dataDelete.MaNXB)">Lưu</button>
+                    <button type="button" class="btn btn-primary" ng-hide="ThemMoi" ng-disabled="frmAdd.$invalid" data-dismiss="modal" ng-click="ThemNXB2(DataNew)">Lưu</button>
+                    <button type="button" class="btn btn-primary" ng-hide="Sua" ng-disabled="frmEdit.$invalid" data-dismiss="modal" ng-click="SuaNXB(dataEdit)">Lưu</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="Thoat()">Thoát</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

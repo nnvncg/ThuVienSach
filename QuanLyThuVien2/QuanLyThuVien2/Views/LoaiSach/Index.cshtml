@@ -1,0 +1,26 @@
+﻿@using QuanLyThuVien2.Models
+@model List<ChuDe>
+
+@foreach (var item in Model)
+{
+    <a class="fa fa-book col-sm-12" href="@Url.Action("SachTheoChuDe","LoaiSach",new { id=item.MaChuDe})">@item.TenChuDe</a>
+}
+<button class="btn btn-link float-right" data-toggle="modal" data-target="#exampleModal-x-2">Xem tất cả</button>
+<div class="modal fade" id="exampleModal-x-2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Danh sách chủ đề</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                    @Html.Action("TatCaChuDe", "LoaiSach")
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>

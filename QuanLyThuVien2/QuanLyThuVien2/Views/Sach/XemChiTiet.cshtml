@@ -1,0 +1,39 @@
+﻿@using QuanLyThuVien2.Models
+@model Sach
+@{
+    ViewBag.Title = "Chi tiết sách " + ViewBag.TenSach;
+    Layout = "~/Views/Layout/_LayoutCustomer.cshtml";
+}
+<div class="col-12 col-sm-12">
+    <h4 class="card-title text-center mt-2"><strong>@Model.TenSach</strong></h4>
+    <hr />
+</div>
+<div class="col-sm-5 mb-2">
+    <div class="border-right">
+        <img class="col-sm-12 mt-1 rounded" src="~/Content/img/Sach/@Model.AnhBia" alt="@Model.TenSach">
+    </div>   
+</div>
+<div class="col-sm-7 mb-2">
+    <p>Chủ đề: @ViewBag.ChuDe</p>
+
+    <p>Nhà xuất bản: @ViewBag.NhaXB</p>    
+    <p>Mô tả:</p>
+    <small>@Html.Raw(Model.MoTa)</small>
+    <hr />
+    <p>Tủ sách: @Model.TuSach</p>
+    <p>Ngày cập nhập: @Model.NgayCapNhat</p>
+    <p>Lượt xem @Model.LuotXem</p>
+    <br />
+    <a href="/">Về trang chủ</a>
+    @if (Session["Id"] != null)
+    {
+        <button class="btn btn-outline-primary" onclick="TickBook(this)" data-idBook="@Model.MaSach">Đánh dấu</button>
+    }
+    else
+    {
+        <button class="btn btn-outline-primary"disabled title="Bạn cần đăng nhập để đánh dấu">Đánh dấu</button>
+
+    }
+</div>
+
+

@@ -1,0 +1,97 @@
+﻿@using QuanLyThuVien2.Models
+@model List<DonHang>
+@{
+    ViewBag.Title = "Sách đã mượn";
+    Layout = "~/Views/Layout/_LayoutCustormer2.cshtml";
+}
+
+<div class="col-sm-4">
+    <div class="card">
+        <div class="card-header bg-success text-white">
+            Quản lý tài khoản
+        </div>
+        <div class="card-body">
+            <a class="dropdown-item rounded" href="/Account/AccountCurrent">Thông tin tài khoản</a>
+            <a class="dropdown-item rounded" href="/Sach/SachDanhDau">Sách đã đánh dấu</a>
+            <a class="dropdown-item active rounded text-white">Sách đã mượn</a>
+        </div>
+    </div>
+</div>
+<div class="col-sm-8">
+    <div class="card">
+        <div class="card-header bg-success text-white">
+            Sách đã mượn
+        </div>
+        <div class="card-body row">
+            @foreach (var item in Model)
+            {
+                <div class="card col-sm-4 mb-2">
+                    <div class="card-header bg-light">Sách đã mượn</div>
+                    <div class="card-body">
+                        <p>Ngày mượn: @item.NgayMuon</p>
+                        <p>Ngày trả: @item.NgayTra</p>
+                        <p>Tình trạng @item.TinhTrang.TenTinhTrang</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <button class="btn btn-outline-dark col-sm-6" data-toggle="modal" data-target="#exampleModal-@item.MaDonHang">Chi tiết</button>
+                            <button class="btn btn-outline-dark col-sm-6" data-toggle="modal" data-target="#exampleModal-2-@item.MaDonHang">Xóa</button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal-@item.MaDonHang" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Đơn mượn ngày @item.NgayMuon</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            @foreach (var n in item.ChiTietDonHang)
+                                            {
+                                                <div class="card" style="width: 18rem;">
+                                                    <img class="card-img-top" src="@n.Sach.AnhBia" alt="Card image cap">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">@n.Sach.TenSach</h5>
+                                                        <p class="card-text">@n.Sach.MoTa.Substring(0,50)</p>
+                                                        @*<a href="#" class="btn btn-primary">Go somewhere</a>*@
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*xoa*@
+                            <div class="modal fade" id="exampleModal-2-@item.MaDonHang" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Đơn mượn ngày @item.NgayMuon</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p class="text-danger">Bạn có chắc muốn xóa thông tin đơn mượn này không???</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="RemoveOrder(@item.MaDonHang)">Xóa</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+
+</div>

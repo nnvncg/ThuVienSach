@@ -1,0 +1,36 @@
+﻿@using QuanLyThuVien2.Models
+@model List<Sach>
+
+<div class="border border-left rounded">
+    <h4 class="card-title text-center mt-2"><strong>Sách mới</strong></h4>
+    <hr />
+    @foreach (var item in Model)
+    {
+        <a href="@Url.Action("XemChiTiet","Sach",new {id=item.MaSach})">
+            <div class="media">
+                <img class="mr-2 ml-1" src="~/Content/img/Sach/@item.AnhBia" style="width:30%" alt="sách mới">
+                <div class="media-body">
+                    @if (item.TenSach.Length > 25)
+                {
+                        <h5 class="mt-0">@item.TenSach.Substring(0, 25)...</h5>
+                    }
+                    else
+                    {
+                        <h5 class="mt-0">@item.TenSach</h5>
+                    }
+                    @if (item.MoTa!=null&&item.MoTa.Length > 50)
+                    {
+
+                        <small class="mt-0">@Html.Raw(item.MoTa.Substring(0, 50))...</small>
+                    }
+                    else
+                    {
+                        <small class="mt-0">@item.MoTa</small>
+                    }
+                </div>
+            </div>
+        </a>
+        <hr />
+    }    
+    
+</div>

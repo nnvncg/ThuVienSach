@@ -1,0 +1,212 @@
+﻿
+@{
+    ViewBag.Title = "Quản lý sách";
+    Layout = "~/Views/Layout/_LayoutAdmin.cshtml";
+}
+<div ng-controller="Sach">
+    <h1 class="text-center"><strong> Quản lý sách</strong></h1>
+    <hr />
+    <input type="text" class="form-control" ng-model="searchInput" placeholder="Nhập tên cần tìm.." />
+    <table class="table">
+        <thead class="thead">
+            <tr>
+                <th scope="col" style="width:4%">#</th>
+                <th scope="col">Tên</th>
+                <th scope="col">Hình ảnh</th>
+                <th scope="col">Mô tả</th>
+                <th scope="col">Số lượng</th>
+                <th scope="col">Giá</th>
+                <th scope="col">
+                    <button ng-click="AddBook()" class="btn btn-link" data-toggle="modal" data-target=".bd-example-modal-lg" title="Thêm mới sản phẩm">Thêm mới</button>
+                </th>
+            </tr>
+        </thead>
+        <tbody ng-repeat="n in dataBook|filter:searchInput|range:(selectedPage-1)*pageSize|limitTo:pageSize">
+            <tr>
+                <th scope="row">{{(selectedPage-1)*pageSize + $index +1}}</th>
+                <td ng-switch="n.TenSach.length>50">{{n.TenSach.substring(0,50)}}<p ng-switch-when="true">...</p></td>
+                <td style="width:10%"><img ng-src="~/Content/img/Sach/{{n.AnhBia}}" style="width:70%" /></td>
+                <td ng-switch="n.MoTa!=''"><p ng-switch-when="true">{{n.MoTa.substring(0,50)}}...</p></td>
+                <td style="width:10%">{{n.SoLuongTon}}</td>
+                <td>{{n.GiaBan| currency:"":0}} VND</td>
+                <td class="d-inline">
+                    <button class="fa fa-info btn  btn-outline-success" ng-click="XemChiTiet(n.MaSach,1)" aria-hidden="true" title="Xem thông tin chi tiết." data-toggle="modal" data-target=".bd-example-modal-lg"></button>&nbsp;
+                    <button class="fa fa-pencil-square-o btn btn-outline-success" aria-hidden="true" ng-click="XemChiTiet(n.MaSach,2)" title="Sửa sản phẩm" data-toggle="modal" data-target=".bd-example-modal-lg"></button>&nbsp;
+                    <button class="fa fa-trash-o btn btn-outline-success" ng-click="XemChiTiet(n.MaSach,3)" aria-hidden="true" title="Xóa sản phẩm." data-toggle="modal" data-target=".bd-example-modal-lg"></button>
+                </td>
+            </tr>
+        </tbody>
+        <tr>
+            <td colspan="5" class="ml-5">
+                <a class="btn btn-light" ng-class="PagePrevActive()" ng-click="goToPrev()"><small><<<</small></a>
+                <a class="btn btn-info" ng-class="PageActive($index+1)" ng-repeat="n in data=(dataBook|filter:searchInput|pageCount:pageSize)" ng-click="toPage($index+1)">{{$index+1}}</a>
+                <a class="btn btn-light" ng-class="PageNextActive()" ng-click="goToNext()"><small>>>></small></a>
+            </td>
+        </tr>
+    </table>
+    @*Modal*@
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-content">
+                    <h2 class="text-center"><strong>{{TieuDe}}</strong></h2>
+                </div>
+                @*xóa*@
+                <div class="modal-body pre-scrollable" ng-hide="Xoa">
+                    <p> Bạn có chắc muốn xóa sách {{dataDelete.TenSach}}</p>
+                </div>
+
+                @*chi tiết*@
+                <div class="modal-body pre-scrollable" ng-hide="ChiTiet">
+                    <div class="form-inline">
+                        <label class="col-sm-2 col-form-label"><strong>Tên sách</strong> </label>
+                        <div class="col-sm-10">
+                            <p>{{dataInfo.TenSach}}</p>
+                        </div>
+                    </div>
+                    <div class="form-inline">
+
+                        <label class="col-sm-2 col-form-label"><strong> Hình sách</strong></label>
+                        <div class="col-sm-10">
+                            <img class="col-sm-10" ng-src="~/Content/img/Sach/{{dataInfo.AnhBia}}" />
+                        </div>
+                    </div>
+                    <div class="form-inline">
+
+                        <label class="col-sm-2 col-form-label"><strong>Mô tả</strong></label>
+                        <div class="col-sm-10">
+                            <p>{{dataInfo.MoTa}}</p>
+                        </div>
+                    </div>
+                    <div class="form-inline">
+                        <label class="col-sm-2 col-form-label"><strong>Vị trí lưu trữ</strong></label>
+                        <div class="col-sm-10">
+                            <p>{{dataInfo.TuSach}}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Số lượng tồn</th>
+                                    <th scope="col">Lượt xem</th>
+                                    <th scope="col">Ngày cập nhập</th>
+                                    <th scope="col">Chủ đề</th>
+                                    <th scope="col">Nhà xuất bản</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{dataInfo.SoLuongTon}}</td>
+                                    <td>{{dataInfo.LuotXem}}</td>
+                                    <td>{{dataInfo.NgayCapNhap.replace("/Date(","").replace(")/","")|date:"dd/MM/yyyy '_' h:mma"}}</td>
+                                    <td ng-repeat="Cd in ChuDe| filter:{ 'MaChuDe':  dataInfo.MaChuDe}:true">
+                                        {{Cd.TenChuDe}}
+                                    </td>
+                                    <td ng-repeat="NXB in NhaXB| filter:{ 'MaNXB':  dataInfo.MaNXB}:true">
+                                        {{NXB.TenNXB}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="modal-body pre-scrollable" ng-hide="ThemMoi">
+                    <form name="frmAdd">
+                        <div class="form-group">
+                            <label for="">Tên sách</label>
+                            <input type="text" required ng-model="DataNew.TenSach" class="form-control" placeholder="Tên sách..">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Hình ảnh</label>
+                            <input type="file" ngf-select ng-model="NewImg" name="file"
+                                   accept="image/*" ngf-max-size="2MB" required
+                                   ngf-model-invalid="errorFile" class="col-sm-4">
+                            <img ng-show="file.$valid" ngf-thumbnail="NewImg" class="thumb">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Giá</label>
+                            <input type="text" required ng-model="DataNew.GiaBan" class="form-control" placeholder="Giá sách..">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Số lượng</label>
+                            <input type="number" required ng-model="DataNew.SoLuongTon" class="form-control" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Mô tả</label>
+                            <div class="col-md-8" ckeditor="options" name="SourceDetail" ng-model="DataNew.MoTa" ready="onReady()"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Tủ sách</label>
+                            <input type="text" class="form-control" required ng-model="DataNew.TuSach" placeholder="Thông tin kệ sách..">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Chủ đề</label>
+                            <select name="ChuDe" ng-model="DataNew.MaChuDe" required class="form-control">
+                                <option ng-repeat="cd in ChuDe" value="{{cd.MaChuDe}}">{{cd.TenChuDe}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Nhà xuất bản</label>
+                            <select name="NhaXuatBan" ng-model="DataNew.MaNXB" required class="form-control">
+                                <option ng-repeat="nxb in NhaXB" value="{{nxb.MaNXB}}">{{nxb.TenNXB}}</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+
+                @*sua*@
+                <div class="modal-body pre-scrollable" ng-hide="Sua">
+                    <form name="frmEdit">
+                        <div class="form-group">
+                            <label for="">Tên sách</label>
+                            <input type="text" required ng-model="dataEdit.TenSach" class="form-control" placeholder="Tên sách..">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Hình ảnh</label>
+                            <input type="file" ngf-select ng-model="NewImg1" name="file"
+                                   accept="image/*" ngf-max-size="2MB" required
+                                   ngf-model-invalid="errorFile" class="col-sm-4">
+                            <img ng-show="file.$valid" ngf-thumbnail="NewImg" class="thumb">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Giá</label>
+                            <input type="text" required ng-model="dataEdit.GiaBan" class="form-control" placeholder="Giá sách..">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Số lượng</label>
+                            <input type="number" required ng-model="dataEdit.SoLuongTon" class="form-control" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Mô tả</label>
+                            <div class="col-md-8" ckeditor="options" name="SourceDetail" ng-model="dataEdit.MoTa" ready="onReady()"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Tủ sách</label>
+                            <input type="text" class="form-control" required ng-model="dataEdit.TuSach" placeholder="Thông tin kệ sách..">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Chủ đề</label>
+                            <select name="ChuDe" ng-model="dataEdit.MaChuDe" required class="form-control">
+                                <option ng-repeat="cd in ChuDe" value="{{cd.MaChuDe}}">{{cd.TenChuDe}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Nhà xuất bản</label>
+                            <select name="NhaXuatBan" ng-model="dataEdit.MaNXB" required class="form-control">
+                                <option ng-repeat="nxb in NhaXB" value="{{nxb.MaNXB}}">{{nxb.TenNXB}}</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-hide="Xoa" data-dismiss="modal" ng-click="XacDinhXoa(dataDelete.MaSach)">Lưu</button>
+                    <button type="button" class="btn btn-primary" ng-hide="ThemMoi" ng-disabled="frmAdd.$invalid" data-dismiss="modal" ng-click="AddBook2(DataNew,NewImg)">Lưu</button>
+                    <button type="button" class="btn btn-primary" ng-hide="Sua" ng-disabled="frmEdit.$invalid" data-dismiss="modal" ng-click="EditBook2(dataEdit,NewImg1)">Lưu</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="Thoat()">Thoát</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

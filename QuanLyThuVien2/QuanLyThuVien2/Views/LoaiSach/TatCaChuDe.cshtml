@@ -1,0 +1,7 @@
+﻿@using QuanLyThuVien2.Models
+@model List<ChuDe>
+
+@foreach (var item in Model)
+{
+    <a class="fa fa-book col-sm-4 mr-3 alert alert-primary" role="alert" href="@Url.Action("SachTheoChuDe","LoaiSach",new { id=item.MaChuDe})">@item.TenChuDe</a>
+}

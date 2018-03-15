@@ -1,0 +1,41 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@model PagedList.PagedList<QuanLyThuVien2.Models.Sach>
+
+@{
+    ViewBag.Title = "Nhà xuất bản " + ViewBag.NhaXB;
+    Layout = "~/Views/Layout/_LayoutCustomer.cshtml";
+}
+<div class="row ml-2 mr-1">
+    <div class="col-sm-12">
+        <h4 class="card-title text-center mt-2"><strong>Chủ đề @ViewBag.NhaXB</strong></h4>
+        <hr />
+    </div>
+    @if (Model.Count() == 0)
+    {
+        <p class="text-danger">
+            Không có sản phẩm nào trong loại sách này!!
+        </p>
+    }
+    @foreach (var item in Model)
+    {
+        <div class="col-sm-4 mb-2 rounded">
+            <a href="@Url.Action("XemChiTiet","Sach",new {id=item.MaSach})">
+                <img class="col-sm-12 mt-1 rounded border border-primary" src="~/Content/img/Sach/@item.AnhBia" alt="@item.TenSach">
+            </a>
+            <a href="@Url.Action("XemChiTiet","Sach",new {id=item.MaSach})">
+                <span><small>@item.TenSach</small></span>
+            </a>
+        </div>
+
+    }
+
+</div>
+<div class="col-sm-12">
+    <nav aria-label="Page navigation example">
+        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/ @Model.PageCount
+        <div class="MenuTrang">
+            @Html.PagedListPager(Model, page => Url.Action("SachTheoNXB", new { id = ViewBag.Id, page = page }))
+        </div>
+    </nav>
+</div>

@@ -1,0 +1,29 @@
+﻿@using QuanLyThuVien2.Models
+@model List<NhaXuatBan>
+
+
+<div>
+    @foreach (var item in Model)
+    {
+        <a class="fa fa-book col-sm-12" href="@Url.Action("SachTheoNXB","NhaXB",new { id=item.MaNXB})">@item.TenNXB</a>
+    }
+    <button class="btn btn-link float-right"  data-toggle="modal" data-target="#exampleModal-x-1">Xem tất cả</button>
+    <div class="modal fade" id="exampleModal-x-1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Danh sách nhà xuất bản</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @Html.Action("DanhSachNXB", "NhaXB")
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

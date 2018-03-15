@@ -1,0 +1,239 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Basic Page Needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <!--[if IE]><meta http-equiv="x-ua-compatible" content="IE=9" /><![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewBag.Title</title>
+    <meta name="description" content="Your Description Here">
+    <meta name="keywords" content="free boostrap, bootstrap template, freebies, free theme, free website, free portfolio theme, portfolio, personal, cv">
+    <meta name="author" content="Jenn, ThemeForces.com">
+
+    <!-- Favicons
+    ================================================== -->
+    <link rel="shortcut icon" href="~/Content/img/favicon.ico">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/font-awesome-4.2.0/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/jasny-bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/animate.css">
+
+    <!-- Stylesheet
+    ================================================== -->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/style.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/responsive.css">
+
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+
+</head>
+<body>
+
+    <!-- Off Canvas Navigation
+    ================================================== -->
+    <div class="navmenu navmenu-default navmenu-fixed-left offcanvas">
+        <!--- Off Canvas Side Menu -->
+        <div class="close" data-toggle="offcanvas" data-target=".navmenu">
+            <span class="fa fa-close"></span>
+        </div>
+        <div class="add-margin"></div>
+        <ul class="nav navmenu-nav d-inline-block text-center offset-sm-4">
+            <!--- Menu -->
+        @if (Session["Id"] != null)
+        {
+            <li>Xin chào @Session["Name"]</li>
+        }
+            <li><a href="/" class="page-scroll">Trang chủ</a></li>
+            <li><a href="#" class="page-scroll">Giới thiệu</a></li>
+            <li><a href="#" class="page-scroll">Sách</a></li>
+            <li><a href="#" class="page-scroll">Liên hệ</a></li>
+        @if (Session["Id"] == null)
+        {
+            <li><a href="#" class="page-scroll" data-toggle="modal" data-target="#exampleModal-1">Đăng nhập</a></li>
+        }
+        else
+        {
+            <li><a href="/Account/AccountCurrent">Tài khoản</a></li>
+            <li><button class="btn btn-link" id="btnLogOut">Đăng xuất</button></li>
+        }
+
+        </ul><!--- End Menu -->
+    </div> <!--- End Off Canvas Side Menu -->
+    <!-- Home Section -->
+    <div id="home">
+        <div class="container text-center">
+            <!-- Navigation -->
+            <nav id="menu" data-toggle="offcanvas" data-target=".navmenu">
+                <span class="fa fa-book text-danger"></span>
+            </nav>
+
+            <div class="content">
+                @*<h4 class="text-warning">Chúng tôi là thư viện sách Đà Lạt</h4>*@
+                <hr>
+                <div class="header-text btn text-primary">
+                    <h1><span id="head-title"></span></h1>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Meet Us Section -->
+    <div>
+        <div class="container mt-sm-5 mb-sm-5">
+            <div class="row">
+                <div class="col-sm-3">
+                    @*sach moi*@
+                    @Html.Action("SachMoi", "Home")
+                </div>
+                <div class="col-sm-6">
+                    <div class="row" style="box-shadow:3px 3px 3px 3px #708090">
+                        @RenderBody()
+                    </div>
+                    <div class="row mt-5" id="SachDaXem" style="box-shadow:3px 3px 3px 3px #708090">
+                        <div class="row ml-2 mr-1">
+                            <div class="col-sm-12">
+                                <h4 class="card-title text-center mt-2"><strong>Sách bạn đã xem</strong></h4>
+                                <hr />
+                            </div>
+
+                            <div class="col-sm-4 mb-2 rounded">
+                                <a href="#">
+                                    <img class="col-sm-12 mt-1 rounded border border-primary" src="~/Content/img/nhung-dinh-cao-chi-huy-–-cuoc-chien-vi-nen-kinh-te-the-gioi.jpg" alt="sách mới">
+                                </a>
+                                <a href="#">
+                                    <span>Những Đỉnh Cao Chỉ Huy – Cuộc Chiến Vì Nền Kinh Tế Thế Giới</span>
+                                </a>
+                            </div>
+                            <div class="col-sm-4 mb-2 rounded">
+                                <a href="#">
+                                    <img class="col-sm-12 mt-1 rounded border border-primary" src="~/Content/img/nhung-dinh-cao-chi-huy-–-cuoc-chien-vi-nen-kinh-te-the-gioi.jpg" alt="sách mới">
+                                </a>
+                                <a href="#">
+                                    <span>Những Đỉnh Cao Chỉ Huy – Cuộc Chiến Vì Nền Kinh Tế Thế Giới</span>
+                                </a>
+                            </div>
+                            <div class="col-sm-4 mb-2 rounded">
+                                <a href="#">
+                                    <img class="col-sm-12 mt-1 rounded border border-primary" src="~/Content/img/nhung-dinh-cao-chi-huy-–-cuoc-chien-vi-nen-kinh-te-the-gioi.jpg" alt="sách mới">
+                                </a>
+                                <a href="#">
+                                    <span>Những Đỉnh Cao Chỉ Huy – Cuộc Chiến Vì Nền Kinh Tế Thế Giới</span>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="row ml-2 rounded border border-left">
+                        @using (Html.BeginForm("KetQuaTimKiem", "TimKiem", FormMethod.Post,new { @class= "form-inline" }))
+                        {
+                            <input class="form-control col-sm-8"name="txtTimKiem" id="txtTimKiem" type="search" placeholder="Tên sách" aria-label="Search">
+                            <button class="btn btn-outline-success col-sm-4" type="submit">Tìm</button>
+                        }
+                        <div class="mt-4 col-sm-12">
+                            <div class="alert alert-primary">
+                                <h5 class="text-center"><strong> loại sách</strong></h5>
+
+                            </div>
+                            <hr />
+                            <div>
+                                @*Loai sach*@
+                                @Html.Action("Index", "LoaiSach")
+                                <!-- Modal Login-->
+                                <div class="modal fade" id="exampleModal-1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel"><strong>Đăng nhập</strong></h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form>
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">Tài khoản</label>
+                                                        <input type="email" class="form-control" id="txtEmail" aria-describedby="emailHelp" placeholder="Tài khoản của bạn">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleInputPassword1">Mật khẩu</label>
+                                                        <input type="password" class="form-control" id="txtPassword" placeholder="Mật khẩu..">
+                                                    </div>
+                                                    @*<div class="form-check">
+                                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                                        <label class="form-check-label" for="exampleCheck1">Nhớ tài khoản</label>
+                                                    </div>*@
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" id="btnLogin" class="btn btn-primary">Đăng nhập</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row ml-2 mt-2 border border-left">
+                        <div class="mt-4 col-sm-12">
+                            <div class="alert alert-primary">
+                                <h5 class="text-center"><strong>Nhà xuất bản</strong></h5>
+
+                            </div>
+                            <hr />
+                            @*Nha xuat ban*@
+                            @Html.Action("Index", "NhaXB")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <nav id="footer">
+        <div class="container">
+            <div class="pull-left">
+                <p>2017 © Da Lat <a href="#">....</a></p>
+            </div>
+            <div class="pull-right">
+                <a href="#home" class="page-scroll">Back to Top <span class="fa fa-angle-up"></span></a>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="~/Content/js/jquery.1.11.1.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type="text/javascript" src="~/Content/js/bootstrap.js"></script>
+    <script type="text/javascript" src="~/Content/js/SmoothScroll.js"></script>
+    <script type="text/javascript" src="~/Content/js/jasny-bootstrap.min.js"></script>
+    <script src="~/scripts/notify.min.js"></script>
+    <script src="~/Content/js/owl.carousel.js"></script>
+    <script src="~/Content/js/typed.js"></script>
+    <script>
+        $(function () {
+            $("#head-title").typed({
+                strings: ["Chào mừng tới thư viện sách Đà Lạt^1000", "Nguồn sách phong phú^1000", "Thể loại đa dạng^1000"],
+                typeSpeed: 100,
+                loop: true,
+                startDelay: 100
+            });
+        });      
+    </script>
+    <script src="~/scripts/Ajax.js"></script>
+    <!-- Javascripts
+    ================================================== -->
+    <script type="text/javascript" src="~/Content/js/main.js"></script>
+
+</body>
+</html>

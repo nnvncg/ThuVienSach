@@ -1,0 +1,114 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Basic Page Needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <!--[if IE]><meta http-equiv="x-ua-compatible" content="IE=9" /><![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewBag.Title</title>
+    <meta name="description" content="@ViewBag.Description">
+    <meta name="keywords" content="free boostrap, bootstrap template, freebies, free theme, free website, free portfolio theme, portfolio, personal, cv">
+    <meta name="author" content="Cong nguyen, facebook.com/nnvncg">
+
+    <!-- Favicons
+    ================================================== -->
+    <link rel="shortcut icon" href="~/Content/img/favicon.ico">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/font-awesome-4.2.0/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/jasny-bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/animate.css">
+
+    <!-- Stylesheet
+    ================================================== -->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/style.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/responsive.css">
+
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+
+</head>
+<body class="container-fluid" ng-app="myApp">
+    <div class="row">
+        <div class="col-sm-3">
+            @*<div class="pos-f-t">
+                <nav class="navbar navbar-dark bg-dark">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </nav>
+                <div class="collapse" id="navbarToggleExternalContent">
+                    <div class="bg-dark p-4">
+                        <ul class="nav navbar-nav">
+                            <li><a href="#" class="text-white">Home</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>*@
+            <nav class="navbar bg-dark navbar-dark">
+                <a class="navbar-brand" href="#">Thư viện sách</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/SachesAdmin/Index">Sách</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/ChuDeAdmin/ChuDe">Chủ đề</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/NhaXuatBan/NhaXuatBan">Nhà xuất bản</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+        </div>
+        <div class="col-sm-9 ">
+            @RenderBody()
+
+        </div>
+    </div>
+
+    <nav id="footer">
+        <div class="container">
+            <div class="pull-left">
+                <p>2017 © Da Lat <a href="#">....</a></p>
+            </div>
+            <div class="pull-right">
+                <a href="#home" class="page-scroll">Back to Top <span class="fa fa-angle-up"></span></a>
+            </div>
+        </div>
+    </nav>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="~/scripts/jquery-1.9.1.min.js"></script>
+    <script src="//cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Content/js/SmoothScroll.js"></script>
+    <script type="text/javascript" src="~/Content/js/jasny-bootstrap.min.js"></script>
+    <script src="~/scripts/angular.min.js"></script>
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-sanitize.js"></script>
+    <script src="~/scripts/ng-file-upload.min.js"></script>
+
+    <script src="~/AngularJS/Module.js"></script>
+    <script src="~/AngularJS/FilterScript.js"></script>
+    <script src="~/AngularJS/Controller.js"></script>
+
+    <script src="~/scripts/notify.min.js"></script>
+    <script src="~/scripts/angular-ckeditor.js"></script>
+    <script src="~/scripts/angular-notify.js"></script>
+
+    <script src="~/Content/js/owl.carousel.js"></script>
+    <script src="~/Content/js/typed.js"></script>
+    <!-- Javascripts
+    ================================================== -->
+    <script type="text/javascript" src="~/Content/js/main.js"></script>
+
+</body>
+</html>
