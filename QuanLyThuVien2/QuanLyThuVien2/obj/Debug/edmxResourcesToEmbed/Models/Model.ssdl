@@ -105,6 +105,7 @@
     <Property Name="DiaChi" Type="nvarchar" MaxLength="150" />
     <Property Name="LoaiTaiKhoan" Type="int" />
     <Property Name="MatKhau" Type="nvarchar" MaxLength="50" />
+    <Property Name="KichHoat" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="TinhTrang">
     <Key>

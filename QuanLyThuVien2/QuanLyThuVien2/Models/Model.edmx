@@ -110,6 +110,7 @@
           <Property Name="DiaChi" Type="nvarchar" MaxLength="150" />
           <Property Name="LoaiTaiKhoan" Type="int" />
           <Property Name="MatKhau" Type="nvarchar" MaxLength="50" />
+          <Property Name="KichHoat" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="TinhTrang">
           <Key>
@@ -384,8 +385,8 @@
           <Property Name="TinhTrangTra" Type="Int32" />
           <Property Name="MaTaiKhoan" Type="Int32" />
           <NavigationProperty Name="ChiTietDonHang" Relationship="Self.FK_ChiTietDonHang_DonHang" FromRole="DonHang" ToRole="ChiTietDonHang" />
-          <NavigationProperty Name="TaiKhoan" Relationship="ThuVienSachModel.FK_DonHang_TaiKhoan" FromRole="DonHang" ToRole="TaiKhoan" />
           <NavigationProperty Name="TinhTrang" Relationship="ThuVienSachModel.FK_DonHang_TinhTrang" FromRole="DonHang" ToRole="TinhTrang" />
+          <NavigationProperty Name="TaiKhoan" Relationship="ThuVienSachModel.FK_DonHang_TaiKhoan" FromRole="DonHang" ToRole="TaiKhoan" />
         </EntityType>
         <EntityType Name="LoaiTaiKhoan">
           <Key>
@@ -487,20 +488,7 @@
             <End Role="LoaiTaiKhoan" EntitySet="LoaiTaiKhoan" />
             <End Role="Quyen" EntitySet="Quyen" />
           </AssociationSet>
-          <EntitySet Name="TaiKhoan" EntityType="ThuVienSachModel.TaiKhoan" />
-          <AssociationSet Name="FK_DonHang_TaiKhoan" Association="ThuVienSachModel.FK_DonHang_TaiKhoan">
-            <End Role="TaiKhoan" EntitySet="TaiKhoan" />
-            <End Role="DonHang" EntitySet="DonHang" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TaiKhoan_LoaiTaiKhoan" Association="ThuVienSachModel.FK_TaiKhoan_LoaiTaiKhoan">
-            <End Role="LoaiTaiKhoan" EntitySet="LoaiTaiKhoan" />
-            <End Role="TaiKhoan" EntitySet="TaiKhoan" />
-          </AssociationSet>
           <EntitySet Name="DanhDau" EntityType="ThuVienSachModel.DanhDau" />
-          <AssociationSet Name="FK_DanhDau_TaiKhoan" Association="ThuVienSachModel.FK_DanhDau_TaiKhoan">
-            <End Role="TaiKhoan" EntitySet="TaiKhoan" />
-            <End Role="DanhDau" EntitySet="DanhDau" />
-          </AssociationSet>
           <EntitySet Name="TinhTrang" EntityType="ThuVienSachModel.TinhTrang" />
           <AssociationSet Name="FK_DonHang_TinhTrang" Association="ThuVienSachModel.FK_DonHang_TinhTrang">
             <End Role="TinhTrang" EntitySet="TinhTrang" />
@@ -527,46 +515,20 @@
             <End Role="Sach" EntitySet="Sach" />
             <End Role="ThamGia" EntitySet="ThamGia" />
           </AssociationSet>
+          <EntitySet Name="TaiKhoan" EntityType="ThuVienSachModel.TaiKhoan" />
+          <AssociationSet Name="FK_DanhDau_TaiKhoan" Association="ThuVienSachModel.FK_DanhDau_TaiKhoan">
+            <End Role="TaiKhoan" EntitySet="TaiKhoan" />
+            <End Role="DanhDau" EntitySet="DanhDau" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DonHang_TaiKhoan" Association="ThuVienSachModel.FK_DonHang_TaiKhoan">
+            <End Role="TaiKhoan" EntitySet="TaiKhoan" />
+            <End Role="DonHang" EntitySet="DonHang" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaiKhoan_LoaiTaiKhoan" Association="ThuVienSachModel.FK_TaiKhoan_LoaiTaiKhoan">
+            <End Role="LoaiTaiKhoan" EntitySet="LoaiTaiKhoan" />
+            <End Role="TaiKhoan" EntitySet="TaiKhoan" />
+          </AssociationSet>
           </EntityContainer>
-        <EntityType Name="TaiKhoan">
-          <Key>
-            <PropertyRef Name="MaTaiKhoan" />
-          </Key>
-          <Property Name="MaTaiKhoan" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="HoVaTen" Type="String" MaxLength="520" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="SoDienThoai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DiaChi" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="LoaiTaiKhoan" Type="Int32" />
-          <Property Name="MatKhau" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="DonHang" Relationship="ThuVienSachModel.FK_DonHang_TaiKhoan" FromRole="TaiKhoan" ToRole="DonHang" />
-          <NavigationProperty Name="LoaiTaiKhoan1" Relationship="ThuVienSachModel.FK_TaiKhoan_LoaiTaiKhoan" FromRole="TaiKhoan" ToRole="LoaiTaiKhoan" />
-          <NavigationProperty Name="DanhDau" Relationship="ThuVienSachModel.FK_DanhDau_TaiKhoan" FromRole="TaiKhoan" ToRole="DanhDau" />
-        </EntityType>
-        <Association Name="FK_DonHang_TaiKhoan">
-          <End Type="ThuVienSachModel.TaiKhoan" Role="TaiKhoan" Multiplicity="0..1" />
-          <End Type="ThuVienSachModel.DonHang" Role="DonHang" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TaiKhoan">
-              <PropertyRef Name="MaTaiKhoan" />
-            </Principal>
-            <Dependent Role="DonHang">
-              <PropertyRef Name="MaTaiKhoan" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TaiKhoan_LoaiTaiKhoan">
-          <End Type="ThuVienSachModel.LoaiTaiKhoan" Role="LoaiTaiKhoan" Multiplicity="0..1" />
-          <End Type="ThuVienSachModel.TaiKhoan" Role="TaiKhoan" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="LoaiTaiKhoan">
-              <PropertyRef Name="MaLoai" />
-            </Principal>
-            <Dependent Role="TaiKhoan">
-              <PropertyRef Name="LoaiTaiKhoan" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="DanhDau">
           <Key>
             <PropertyRef Name="MaTaiKhoan" />
@@ -575,21 +537,9 @@
           <Property Name="MaTaiKhoan" Type="Int32" Nullable="false" />
           <Property Name="MaSach" Type="Int32" Nullable="false" />
           <Property Name="NgayTao" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="TaiKhoan" Relationship="ThuVienSachModel.FK_DanhDau_TaiKhoan" FromRole="DanhDau" ToRole="TaiKhoan" />
           <NavigationProperty Name="Sach" Relationship="ThuVienSachModel.FK_DanhDau_Sach" FromRole="DanhDau" ToRole="Sach" />
+          <NavigationProperty Name="TaiKhoan" Relationship="ThuVienSachModel.FK_DanhDau_TaiKhoan" FromRole="DanhDau" ToRole="TaiKhoan" />
         </EntityType>
-        <Association Name="FK_DanhDau_TaiKhoan">
-          <End Type="ThuVienSachModel.TaiKhoan" Role="TaiKhoan" Multiplicity="1" />
-          <End Type="ThuVienSachModel.DanhDau" Role="DanhDau" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TaiKhoan">
-              <PropertyRef Name="MaTaiKhoan" />
-            </Principal>
-            <Dependent Role="DanhDau">
-              <PropertyRef Name="MaTaiKhoan" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="TinhTrang">
           <Key>
             <PropertyRef Name="Id" />
@@ -692,6 +642,58 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="TaiKhoan">
+          <Key>
+            <PropertyRef Name="MaTaiKhoan" />
+          </Key>
+          <Property Name="MaTaiKhoan" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HoVaTen" Type="String" MaxLength="520" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="SoDienThoai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DiaChi" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="LoaiTaiKhoan" Type="Int32" />
+          <Property Name="MatKhau" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="KichHoat" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="DanhDau" Relationship="ThuVienSachModel.FK_DanhDau_TaiKhoan" FromRole="TaiKhoan" ToRole="DanhDau" />
+          <NavigationProperty Name="DonHang" Relationship="ThuVienSachModel.FK_DonHang_TaiKhoan" FromRole="TaiKhoan" ToRole="DonHang" />
+          <NavigationProperty Name="LoaiTaiKhoan1" Relationship="ThuVienSachModel.FK_TaiKhoan_LoaiTaiKhoan" FromRole="TaiKhoan" ToRole="LoaiTaiKhoan" />
+        </EntityType>
+        <Association Name="FK_DanhDau_TaiKhoan">
+          <End Type="ThuVienSachModel.TaiKhoan" Role="TaiKhoan" Multiplicity="1" />
+          <End Type="ThuVienSachModel.DanhDau" Role="DanhDau" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoan">
+              <PropertyRef Name="MaTaiKhoan" />
+            </Principal>
+            <Dependent Role="DanhDau">
+              <PropertyRef Name="MaTaiKhoan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DonHang_TaiKhoan">
+          <End Type="ThuVienSachModel.TaiKhoan" Role="TaiKhoan" Multiplicity="0..1" />
+          <End Type="ThuVienSachModel.DonHang" Role="DonHang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoan">
+              <PropertyRef Name="MaTaiKhoan" />
+            </Principal>
+            <Dependent Role="DonHang">
+              <PropertyRef Name="MaTaiKhoan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaiKhoan_LoaiTaiKhoan">
+          <End Type="ThuVienSachModel.LoaiTaiKhoan" Role="LoaiTaiKhoan" Multiplicity="0..1" />
+          <End Type="ThuVienSachModel.TaiKhoan" Role="TaiKhoan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoaiTaiKhoan">
+              <PropertyRef Name="MaLoai" />
+            </Principal>
+            <Dependent Role="TaiKhoan">
+              <PropertyRef Name="LoaiTaiKhoan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -782,19 +784,6 @@
               <ScalarProperty Name="MaQuyen" ColumnName="MaQuyen" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="TaiKhoan">
-            <EntityTypeMapping TypeName="ThuVienSachModel.TaiKhoan">
-              <MappingFragment StoreEntitySet="TaiKhoan">
-                <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
-                <ScalarProperty Name="LoaiTaiKhoan" ColumnName="LoaiTaiKhoan" />
-                <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
-                <ScalarProperty Name="SoDienThoai" ColumnName="SoDienThoai" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="HoVaTen" ColumnName="HoVaTen" />
-                <ScalarProperty Name="MaTaiKhoan" ColumnName="MaTaiKhoan" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="DanhDau">
             <EntityTypeMapping TypeName="ThuVienSachModel.DanhDau">
               <MappingFragment StoreEntitySet="DanhDau">
@@ -827,6 +816,20 @@
                 <ScalarProperty Name="GiaBan" ColumnName="GiaBan" />
                 <ScalarProperty Name="TenSach" ColumnName="TenSach" />
                 <ScalarProperty Name="MaSach" ColumnName="MaSach" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaiKhoan">
+            <EntityTypeMapping TypeName="ThuVienSachModel.TaiKhoan">
+              <MappingFragment StoreEntitySet="TaiKhoan">
+                <ScalarProperty Name="KichHoat" ColumnName="KichHoat" />
+                <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
+                <ScalarProperty Name="LoaiTaiKhoan" ColumnName="LoaiTaiKhoan" />
+                <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+                <ScalarProperty Name="SoDienThoai" ColumnName="SoDienThoai" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="HoVaTen" ColumnName="HoVaTen" />
+                <ScalarProperty Name="MaTaiKhoan" ColumnName="MaTaiKhoan" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

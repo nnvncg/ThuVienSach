@@ -18,7 +18,7 @@ namespace QuanLyThuVien2.Models
         public int MaSach { get; set; }
         public Nullable<System.DateTime> NgayTao { get; set; }
     
-        public virtual TaiKhoan TaiKhoan { get; set; }
         public virtual Sach Sach { get; set; }
+        public virtual TaiKhoan TaiKhoan { get; set; }
     }
 }
