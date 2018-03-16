@@ -1,0 +1,156 @@
+﻿
+@{
+    ViewBag.Title = "Quản lý tài khoản";
+    Layout = "~/Views/Layout/_LayoutAdmin.cshtml";
+}
+<div ng-controller="TaiKhoan">
+    <h1 class="text-center"><strong> Quản lý nhà xuất bản</strong></h1>
+    <hr />
+    <input type="text" class="form-control" ng-model="searchInput" placeholder="Nhập tên cần tìm.." />
+    <table class="table">
+        <thead class="thead">
+            <tr>
+                <th scope="col" style="width:4%">#</th>
+                <th scope="col">Tên</th>
+                <th scope="col">Email</th>
+                <th scope="col">Loại tài khoản</th>
+                <th scope="col">
+                    <button ng-click="TKAdd()" class="btn btn-link" data-toggle="modal" data-target=".bd-example-modal-lg" title="Thêm mới sản phẩm">Thêm mới</button>
+                </th>
+            </tr>
+        </thead>
+        <tbody ng-repeat="n in TaiKhoan|filter:searchInput|range:(selectedPage-1)*pageSize|limitTo:pageSize">
+            <tr>
+                <th scope="row">{{(selectedPage-1)*pageSize + $index +1}}</th>
+                <td>{{n.HoVaTen}}</td>
+                <td>{{n.Email}}</td>
+                <td ng-repeat="TK in LoaiTK| filter:{ 'MaLoai': n.LoaiTaiKhoan}:true">
+                    {{TK.TenLoaiTK}}
+                </td>
+                <td class="d-inline">
+                    <button class="fa fa-info btn  btn-outline-success" ng-click="XemChiTiet(n.MaTaiKhoan,3)" aria-hidden="true" title="Xem thông tin chi tiết." data-toggle="modal" data-target=".bd-example-modal-lg"></button>&nbsp;
+                    <button class="fa fa-pencil-square-o btn btn-outline-success" aria-hidden="true" ng-click="XemChiTiet(n.MaTaiKhoan,2)" title="Sửa tài khoản" data-toggle="modal" data-target=".bd-example-modal-lg"></button>&nbsp;
+                    <button class="fa fa-trash-o btn btn-outline-success" ng-click="XemChiTiet(n.MaTaiKhoan,1)" aria-hidden="true" title="Xóa tài khoản." data-toggle="modal" data-target=".bd-example-modal-lg"></button>
+                </td>
+            </tr>
+        </tbody>
+        <tr>
+            <td colspan="5" class="ml-5">
+                <a class="btn btn-light" ng-class="PagePrevActive()" ng-click="goToPrev()"><small><<<</small></a>
+                <a class="btn btn-info" ng-class="PageActive($index+1)" ng-repeat="n in data=(TaiKhoan|filter:searchInput|pageCount:pageSize)" ng-click="toPage($index+1)">{{$index+1}}</a>
+                <a class="btn btn-light" ng-class="PageNextActive()" ng-click="goToNext()"><small>>>></small></a>
+            </td>
+        </tr>
+    </table>
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-content">
+                    <br />
+                    <h2 class="text-center"><strong>{{TieuDe}}</strong></h2>
+                </div>
+                <div class="modal-body pre-scrollable" ng-hide="ThemMoi">
+                    <form name="frmAdd">
+                        <div class="form-group">
+                            <label for="">Họ và tên</label>
+                            <input type="text" required ng-model="dataNew.HoVaTen" class="form-control" placeholder="Điền thông tin..">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Email</label>
+                            <input type="text" required ng-model="dataNew.Email" class="form-control" placeholder="Điền thông tin..">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Số điện thoại</label>
+                            <input type="text" required ng-model="dataNew.SoDienThoai" class="form-control" placeholder="Điền thông tin..">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Địa chỉ</label>
+                            <input type="text" required ng-model="dataNew.DiaChi" class="form-control" placeholder="Điền thông tin..">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Loại tài khoản</label>
+                            <select name="ChuDe" ng-model="dataNew.LoaiTaiKhoan" required class="form-control">
+                                <option ng-repeat="ltk in LoaiTK" value="{{ltk.MaLoai}}">{{ltk.TenLoaiTK}}</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-body pre-scrollable" ng-hide="ChiTiet">
+                    <div class="form-inline">
+                        <label class="col-sm-2 col-form-label"><strong>Tên sách</strong> </label>
+                        <div class="col-sm-10">
+                            <p>{{dataInfo.HoVaTen}}</p>
+                        </div>
+                    </div>
+                    <div class="form-inline">
+                        <label class="col-sm-2 col-form-label"><strong>Email</strong> </label>
+                        <div class="col-sm-10">
+                            <p>{{dataInfo.Email}}</p>
+                        </div>
+                    </div>
+                    <div class="form-inline">
+                        <label class="col-sm-2 col-form-label"><strong>Số điện thoại</strong> </label>
+                        <div class="col-sm-10">
+                            <p>{{dataInfo.SoDienThoai}}</p>
+                        </div>
+                    </div>
+                    <div class="form-inline">
+                        <label class="col-sm-2 col-form-label"><strong>Địa chỉ</strong> </label>
+                        <div class="col-sm-10">
+                            <p>{{dataInfo.DiaChi}}</p>
+                        </div>
+                    </div>
+                    <div class="form-inline">
+                        <label class="col-sm-2 col-form-label"><strong>Loại tài khoản</strong> </label>
+                        <div class="col-sm-10">
+                            <p ng-repeat="TK in LoaiTK| filter:{ 'MaLoai': n.LoaiTaiKhoan}:true">
+                                {{TK.TenLoaiTK}}
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-body pre-scrollable" ng-hide="Sua">
+                    <form name="frmEdit">
+                        <div class="form-group">
+                            <label for="">Họ và tên</label>
+                            <input type="text" required ng-model="dataEdit.HoVaTen" class="form-control" placeholder="Điền thông tin..">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Email</label>
+                            <input type="text" required ng-model="dataEdit.Email" class="form-control" placeholder="Điền thông tin..">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Số điện thoại</label>
+                            <input type="text" required ng-model="dataEdit.SoDienThoai" class="form-control" placeholder="Điền thông tin..">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Địa chỉ</label>
+                            <input type="text" required ng-model="dataEdit.DiaChi" class="form-control" placeholder="Điền thông tin..">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Loại tài khoản</label>
+                            <select name="ChuDe" ng-model="dataEdit.LoaiTaiKhoan" required class="form-control">
+                                <option ng-repeat="ltk in LoaiTK" value="{{ltk.MaLoai}}">{{ltk.TenLoaiTK}}</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                @*xóa*@
+                <div class="modal-body pre-scrollable" ng-hide="Xoa">
+                    <p> Bạn có chắc muốn xóa thông tin tài khoản {{dataDelete.Email}}</p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-hide="Xoa" data-dismiss="modal" ng-click="XoaTaiKhoan(dataDelete)">Lưu</button>
+                    <button type="button" class="btn btn-primary" ng-hide="ThemMoi" ng-disabled="frmAdd.$invalid" data-dismiss="modal" ng-click="ThemTaiKhoan(dataNew)">Lưu</button>
+                    <button type="button" class="btn btn-primary" ng-hide="Sua" ng-disabled="frmEdit.$invalid" data-dismiss="modal" ng-click="SuaTaiKhoan(dataEdit)">Lưu</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="Thoat()">Thoát</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

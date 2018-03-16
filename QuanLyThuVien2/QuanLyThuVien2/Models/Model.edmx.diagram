@@ -16,11 +16,7 @@
         <AssociationConnector Association="ThuVienSachModel.FK_ChiTietDonHang_DonHang" ManuallyRouted="false" />
         <AssociationConnector Association="ThuVienSachModel.FK_ThamGia_TacGia" ManuallyRouted="false" />
         <AssociationConnector Association="ThuVienSachModel.PhanQuyen" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="ThuVienSachModel.TaiKhoan" Width="1.5" PointX="6" PointY="6.75" />
-        <AssociationConnector Association="ThuVienSachModel.FK_DonHang_TaiKhoan" />
-        <AssociationConnector Association="ThuVienSachModel.FK_TaiKhoan_LoaiTaiKhoan" />
         <EntityTypeShape EntityType="ThuVienSachModel.DanhDau" Width="1.5" PointX="8.25" PointY="4.5" />
-        <AssociationConnector Association="ThuVienSachModel.FK_DanhDau_TaiKhoan" />
         <EntityTypeShape EntityType="ThuVienSachModel.TinhTrang" Width="1.5" PointX="7.375" PointY="0.875" />
         <AssociationConnector Association="ThuVienSachModel.FK_DonHang_TinhTrang" />
         <EntityTypeShape EntityType="ThuVienSachModel.Sach" Width="1.5" PointX="3" PointY="1.125" />
@@ -29,6 +25,10 @@
         <AssociationConnector Association="ThuVienSachModel.FK_DanhDau_Sach" />
         <AssociationConnector Association="ThuVienSachModel.FK_Sach_NhaXuatBan" />
         <AssociationConnector Association="ThuVienSachModel.FK_ThamGia_Sach" />
+        <EntityTypeShape EntityType="ThuVienSachModel.TaiKhoan" Width="1.5" PointX="3.75" PointY="19.25" />
+        <AssociationConnector Association="ThuVienSachModel.FK_DanhDau_TaiKhoan" />
+        <AssociationConnector Association="ThuVienSachModel.FK_DonHang_TaiKhoan" />
+        <AssociationConnector Association="ThuVienSachModel.FK_TaiKhoan_LoaiTaiKhoan" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

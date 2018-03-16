@@ -4,15 +4,20 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using QuanLyThuVien2.Models;
+
 namespace QuanLyThuVien2.Controllers
 {
-    public class TaiKhoanController : Controller
+    public class LoaiTKAdminController : Controller
     {
-        // GET: TaiKhoan
         ThuVienSachEntities db = new ThuVienSachEntities();
-        public ActionResult TaiKhoan()
+        // GET: TinhTrangAdmin
+        public ActionResult Index()
         {
             return View();
+        }
+        public JsonResult DanhSach()
+        {
+            return Json(db.LoaiTaiKhoan.ToList(), JsonRequestBehavior.AllowGet);
         }
     }
 }

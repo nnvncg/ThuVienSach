@@ -35,9 +35,9 @@ namespace QuanLyThuVien2.Models
         public virtual DbSet<Quyen> Quyen { get; set; }
         public virtual DbSet<TacGia> TacGia { get; set; }
         public virtual DbSet<ThamGia> ThamGia { get; set; }
-        public virtual DbSet<TaiKhoan> TaiKhoan { get; set; }
         public virtual DbSet<DanhDau> DanhDau { get; set; }
         public virtual DbSet<TinhTrang> TinhTrang { get; set; }
         public virtual DbSet<Sach> Sach { get; set; }
+        public virtual DbSet<TaiKhoan> TaiKhoan { get; set; }
     }
 }

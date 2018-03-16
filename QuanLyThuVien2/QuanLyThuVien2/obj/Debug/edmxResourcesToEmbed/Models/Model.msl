@@ -85,19 +85,6 @@
         <ScalarProperty Name="MaQuyen" ColumnName="MaQuyen" />
       </EndProperty>
     </AssociationSetMapping>
-    <EntitySetMapping Name="TaiKhoan">
-      <EntityTypeMapping TypeName="ThuVienSachModel.TaiKhoan">
-        <MappingFragment StoreEntitySet="TaiKhoan">
-          <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
-          <ScalarProperty Name="LoaiTaiKhoan" ColumnName="LoaiTaiKhoan" />
-          <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
-          <ScalarProperty Name="SoDienThoai" ColumnName="SoDienThoai" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="HoVaTen" ColumnName="HoVaTen" />
-          <ScalarProperty Name="MaTaiKhoan" ColumnName="MaTaiKhoan" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="DanhDau">
       <EntityTypeMapping TypeName="ThuVienSachModel.DanhDau">
         <MappingFragment StoreEntitySet="DanhDau">
@@ -130,6 +117,20 @@
           <ScalarProperty Name="GiaBan" ColumnName="GiaBan" />
           <ScalarProperty Name="TenSach" ColumnName="TenSach" />
           <ScalarProperty Name="MaSach" ColumnName="MaSach" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TaiKhoan">
+      <EntityTypeMapping TypeName="ThuVienSachModel.TaiKhoan">
+        <MappingFragment StoreEntitySet="TaiKhoan">
+          <ScalarProperty Name="KichHoat" ColumnName="KichHoat" />
+          <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
+          <ScalarProperty Name="LoaiTaiKhoan" ColumnName="LoaiTaiKhoan" />
+          <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+          <ScalarProperty Name="SoDienThoai" ColumnName="SoDienThoai" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="HoVaTen" ColumnName="HoVaTen" />
+          <ScalarProperty Name="MaTaiKhoan" ColumnName="MaTaiKhoan" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

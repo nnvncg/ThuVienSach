@@ -271,8 +271,9 @@
     <Compile Include="Controllers\NhaXuatBanController.cs" />
     <Compile Include="Controllers\SachController.cs" />
     <Compile Include="Controllers\SachesAdminController.cs" />
-    <Compile Include="Controllers\TaiKhoanController.cs" />
+    <Compile Include="Controllers\TaiKhoanAdminController.cs" />
     <Compile Include="Controllers\TimKiemController.cs" />
+    <Compile Include="Controllers\LoaiTKAdminController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -398,7 +399,7 @@
     <Content Include="scripts\jquery-1.9.1.min.map" />
     <Content Include="Views\NhaXuatBan\NhaXuatBan.cshtml" />
     <Content Include="Views\ChuDeAdmin\ChuDe.cshtml" />
-    <Content Include="Views\TaiKhoan\TaiKhoan.cshtml" />
+    <Content Include="Views\TaiKhoanAdmin\TaiKhoan.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -410,6 +411,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\DonMuon\" />
     <Folder Include="Views\SachAdmin\" />
+    <Folder Include="Views\TinhTrangAdmin\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
