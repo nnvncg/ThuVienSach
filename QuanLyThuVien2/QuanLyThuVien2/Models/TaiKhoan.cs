@@ -32,8 +32,8 @@ namespace QuanLyThuVien2.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DanhDau> DanhDau { get; set; }
+        public virtual LoaiTaiKhoan LoaiTaiKhoan1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DonHang> DonHang { get; set; }
-        public virtual LoaiTaiKhoan LoaiTaiKhoan1 { get; set; }
     }
 }

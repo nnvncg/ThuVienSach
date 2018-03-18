@@ -42,7 +42,7 @@ myCntr.controller("Sach", function ($scope, $http, Upload, $notify, $window) {
             return $scope.selectedPage == page ? 'btn-danger' : '';
         }
     };
-    
+
     load();
     function load() {
         $scope.ThemMoi = true;
@@ -89,6 +89,7 @@ myCntr.controller("Sach", function ($scope, $http, Upload, $notify, $window) {
     };
     //quản lý chủ đê
     $scope.ChuDeAdd = function () {
+        load();
         $scope.TieuDe = "Thêm chủ đề mới ";
         $scope.ThemMoi = false;
     }
@@ -342,7 +343,7 @@ myCntr.controller("Sach", function ($scope, $http, Upload, $notify, $window) {
         file.upload = Upload.upload({
             url: "/SachesAdmin/EditBook",
             data: { sach, Image: file },
-        }).then(function (response) {
+            }).then(function (response) {
             if (response.data) {
                 getAllBook();
                 $notify.setTime(2).setPosition('bottom-right').showCloseButton(true).showProgressBar(true);
@@ -354,7 +355,7 @@ myCntr.controller("Sach", function ($scope, $http, Upload, $notify, $window) {
                 $notify.setPosition('bottom-left');
                 $notify.error('Sửa sách', 'Sửa sách thất bại!');
             }
-        })
+            })
     };
     $scope.AddBook2 = function (sach, file) {
         file.upload = Upload.upload({
@@ -553,4 +554,304 @@ myCntr.controller("TaiKhoan", function ($scope, $http, Upload, $notify, $window)
         load();
     };
 
+});
+myCntr.controller("DonMuon", function ($scope, $http, Upload, $notify, $window) {
+    $scope.pageSize = 5;
+    $scope.selectedPage = 1;
+    $scope.selectPage = function (page) {
+        $scope.selectedPage = page;
+    };
+    $scope.toPage = function (page) {
+        $scope.selectedPage = page;
+    };
+    $scope.goToPrev = function () {
+        if ($scope.selectedPage > 1)
+            $scope.selectedPage--;
+    };
+    $scope.goToNext = function (page) {
+        if ($scope.data != null) {
+            if ($scope.selectedPage < $scope.data.length)
+                $scope.selectedPage++;
+        }
+
+    };
+    $scope.PagePrevActive = function () {
+        return $scope.selectedPage == 1 ? 'ng-hide' : 'ng-show';
+    };
+    $scope.PageNextActive = function (page) {
+        if ($scope.data != null) {
+            return $scope.selectedPage == $scope.data.length ? 'ng-hide' : 'ng-show';
+        }
+        return 'ng-hide';
+    };
+    $scope.PageActive = function (page) {
+        if ($scope.data.length == 1) {
+            return $scope.selectedPage == page ? 'ng-hide' : '';
+        }
+        else {
+
+            return $scope.selectedPage == page ? 'btn-danger' : '';
+        }
+    };
+
+    loaiTimKiem();
+    function loaiTimKiem() {
+        $scope.Date = true;
+        $scope.Text = true;
+        $scope.All = true;
+        $scope.CheckDate = null;
+    }
+    $scope.Loai = 1;
+    PhanLoai();
+    //tìm kiếm
+    function PhanLoai() {
+        if ($scope.Loai == 1) {
+            loaiTimKiem();
+            DanhSach();
+        }
+        if ($scope.Loai == 2) {
+            loaiTimKiem();
+            $scope.Date = false;
+            $scope.All = false;
+            $scope.Ngay = 1;
+        }
+        if ($scope.Loai == 3) {
+            loaiTimKiem();
+            $scope.Date = false;
+            $scope.All = false;
+            $scope.Ngay = 2;
+        }
+        if ($scope.Loai == 4) {
+            loaiTimKiem();
+            $scope.Text = false;
+            $scope.All = false;
+        }
+        if ($scope.Loai == 5) {
+            loaiTimKiem();
+            $scope.All = false;
+            QuaHan();
+        }
+    }
+    $scope.Radio = function (ma) {
+        $scope.Loai = ma;
+        PhanLoai();
+    }
+    function QuaHan() {
+        $http(
+            {
+                method: "Get",
+                url: "/DonMuonAdmin/QuaHan",
+            }).then(function (response) {
+                $scope.DanhSach = response.data;
+            })
+    }
+    $scope.ChangeText = function (text) {
+        if (text!='') {
+            $http(
+            {
+                method: "Post",
+                url: "/DonMuonAdmin/TimTheoTK",
+                dataType: 'json',
+                data: { tuKhoa: text }
+            }).then(function (response) {
+                $scope.DanhSach = response.data;
+            })
+        }
+        else {
+            DanhSach();
+        }
+    }
+    $scope.ChangeDate = function (date) {
+        if ($scope.Ngay == 1) {
+            $http(
+            {
+                method: "Post",
+                url: "/DonMuonAdmin/TimTheoNgay",
+                dataType: 'json',
+                data: { dt: date, loai: 1 }
+            }).then(function (response) {
+                $scope.DanhSach = response.data;
+            })
+        }
+        if ($scope.Ngay == 2) {
+            $http(
+            {
+                method: "Post",
+                url: "/DonMuonAdmin/TimTheoNgay",
+                dataType: 'json',
+                data: { dt: date, loai: 2 }
+            }).then(function (response) {
+                $scope.DanhSach = response.data;
+            })
+        }
+    }
+    $scope.mang = [];
+    $scope.AddDetail = function (sach, sl) {
+        $scope.mang.push({ MaSach: sach, SoLuong: sl });
+        $scope.MaSach = null; $scope.SoLuong = null;
+    }
+    $scope.removeItem = function (x) {
+        $scope.mang.splice(x, 1);
+    }
+    $scope.HDAdd = function () {
+        load();
+        $scope.TieuDe = "Thêm đơn mượn mới";
+        $scope.ThemMoi = false;
+    }
+    $scope.SuaDH = function (dh) {
+        $http(
+        {
+            method: "POST",
+            url: "/DonMuonAdmin/Sua",
+            dataType: 'json',
+            data: { dh: dh }
+        }).then(function (response) {
+            if (response.data) {
+                PhanLoai();
+                $notify.setTime(2).setPosition('bottom-right').showCloseButton(true).showProgressBar(true);
+                $notify.setPosition('bottom-left');
+                $notify.success('Sửa đơn mượn', 'Sửa đơn mượn thành công!');
+            }
+            else {
+                $notify.setTime(2).setPosition('bottom-right').showCloseButton(true).showProgressBar(true);
+                $notify.setPosition('bottom-left');
+                $notify.error('Sửa đơn mượn', 'Sửa đơn mượn thất bại!');
+            }
+        })
+    };
+    $scope.ThemDH = function (dh) {
+        $http(
+        {
+            method: "POST",
+            url: "/DonMuonAdmin/Them",
+            dataType: 'json',
+            data: { dh: dh, chiTiet: $scope.mang }
+        }).then(function (response) {
+            if (response.data) {
+                PhanLoai();
+                $notify.setTime(2).setPosition('bottom-right').showCloseButton(true).showProgressBar(true);
+                $notify.setPosition('bottom-left');
+                $notify.success('Thêm đơn mượn', 'Thêm đơn mượn thành công!');
+            }
+            else {
+                $notify.setTime(2).setPosition('bottom-right').showCloseButton(true).showProgressBar(true);
+                $notify.setPosition('bottom-left');
+                $notify.error('Thêm đơn mượn', 'Thêm đơn mượn thất bại!');
+            }
+        })
+    };
+    $scope.XoaDH = function (dh) {
+        $http(
+        {
+            method: "POST",
+            url: "/DonMuonAdmin/Xoa",
+            dataType: 'json',
+            data: { dh: dh }
+        }).then(function (response) {
+            if (response.data) {
+                PhanLoai();
+                $notify.setTime(2).setPosition('bottom-right').showCloseButton(true).showProgressBar(true);
+                $notify.setPosition('bottom-left');
+                $notify.success('Xóa đơn mượn', 'Xóa đơn mượn thành công!');
+            }
+            else {
+                $notify.setTime(2).setPosition('bottom-right').showCloseButton(true).showProgressBar(true);
+                $notify.setPosition('bottom-left');
+                $notify.error('Xóa đơn mượn', 'Xóa đơn mượn thất bại!');
+            }
+        })
+    };
+    $scope.XemChiTiet = function (id, loai) {
+        $http(
+        {
+            method: "POST",
+            url: "/DonMuonAdmin/ChiTiet",
+            dataType: 'json',
+            data: { id: id }
+        }).then(function (response) {
+            if (loai == 2) {
+                load();
+                $scope.TieuDe = "Sửa thông tin đơn mượn sách";
+                $scope.Sua = false;
+                $scope.dataEdit = response.data;
+                $scope.dataEdit.NgayMuon = null;
+                $scope.dataEdit.NgayTra = null;
+            }
+            if (loai == 1) {
+                load();
+                $scope.TieuDe = "Xóa thông tin đơn mượn sách";
+                $scope.Xoa = false;
+                $scope.dataDelete = response.data;
+            }
+            if (loai == 3) {
+                load();
+                $scope.TieuDe = "Thông tin đơn mượn sách";
+                $scope.ChiTiet = false;
+                $scope.dataInfo = response.data;
+                DonHangChiTiet($scope.dataInfo.MaDonHang);
+            }
+        })
+    };
+    function DonHangChiTiet(id) {
+        $http(
+        {
+            method: "POST",
+            url: "/DonMuonAdmin/ChiTietDonMuon",
+            dataType: 'json',
+            data: { id: id }
+        }).then(function (response) {
+            $scope.ChiTietDonMuon = response.data;
+        })
+    };
+    Sach();
+    function Sach() {
+        $http(
+        {
+            method: "Get",
+            url: "/SachesAdmin/AllBook",
+        }).then(function (response) {
+            $scope.Sach = response.data;
+        })
+    };
+    load();
+    function load() {
+        $scope.ThemMoi = true;
+        $scope.Xoa = true;
+        $scope.ChiTiet = true;
+        $scope.dataDelete = null;
+        $scope.dataInfo = null;
+        $scope.file = null;
+        $scope.dataEdit = null;
+        $scope.Sua = true;
+        $scope.TieuDe = "";
+    };
+    TaiKhoan();
+    function TaiKhoan() {
+        $http(
+        {
+            method: "Get",
+            url: "/TaiKhoanAdmin/DanhSachTaiKhoan",
+        }).then(function (response) {
+            $scope.TaiKhoan = response.data;
+        })
+    };
+    function DanhSach() {
+        $http(
+        {
+            method: "Get",
+            url: "/DonMuonAdmin/DanhSach",
+        }).then(function (response) {
+            $scope.DanhSach = response.data;
+        })
+    };
+    TinhTrang();
+    function TinhTrang() {
+        $http(
+        {
+            method: "Get",
+            url: "/TinhTrangAdmin/DanhSach",
+        }).then(function (response) {
+            $scope.TinhTrang = response.data;
+        })
+    };
 });

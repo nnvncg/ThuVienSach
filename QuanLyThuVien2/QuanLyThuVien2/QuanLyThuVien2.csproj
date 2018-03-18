@@ -257,6 +257,7 @@
     <Content Include="scripts\angular.min.js" />
     <Content Include="scripts\jquery-1.9.1.min.js" />
     <Content Include="scripts\ng-file-upload.min.js" />
+    <Content Include="scripts\ngDatepicker.min.js" />
     <Content Include="scripts\notify.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -264,6 +265,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ChuDeAdminController.cs" />
+    <Compile Include="Controllers\DonMuonAdminController.cs" />
     <Compile Include="Controllers\DonMuonController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoaiSachController.cs" />
@@ -274,6 +276,7 @@
     <Compile Include="Controllers\TaiKhoanAdminController.cs" />
     <Compile Include="Controllers\TimKiemController.cs" />
     <Compile Include="Controllers\LoaiTKAdminController.cs" />
+    <Compile Include="Controllers\TinhTrangAdminController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -400,6 +403,7 @@
     <Content Include="Views\NhaXuatBan\NhaXuatBan.cshtml" />
     <Content Include="Views\ChuDeAdmin\ChuDe.cshtml" />
     <Content Include="Views\TaiKhoanAdmin\TaiKhoan.cshtml" />
+    <Content Include="Views\DonMuonAdmin\DonMuon.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
