@@ -30,10 +30,11 @@
       <PropertyRef Name="MaDonHang" />
     </Key>
     <Property Name="MaDonHang" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="NgayMuon" Type="datetime" />
-    <Property Name="NgayTra" Type="datetime" />
+    <Property Name="NgayMuon" Type="datetime" Nullable="false" />
+    <Property Name="NgayTra" Type="datetime" Nullable="false" />
     <Property Name="TinhTrangTra" Type="int" />
     <Property Name="MaTaiKhoan" Type="int" />
+    <Property Name="GhiChu" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="LoaiTaiKhoan">
     <Key>

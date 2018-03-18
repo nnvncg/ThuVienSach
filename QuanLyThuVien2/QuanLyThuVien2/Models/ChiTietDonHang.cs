@@ -18,7 +18,7 @@ namespace QuanLyThuVien2.Models
         public int MaSach { get; set; }
         public Nullable<int> SoLuong { get; set; }
     
-        public virtual DonHang DonHang { get; set; }
         public virtual Sach Sach { get; set; }
+        public virtual DonHang DonHang { get; set; }
     }
 }

@@ -18,17 +18,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="DonHang">
-      <EntityTypeMapping TypeName="ThuVienSachModel.DonHang">
-        <MappingFragment StoreEntitySet="DonHang">
-          <ScalarProperty Name="MaDonHang" ColumnName="MaDonHang" />
-          <ScalarProperty Name="NgayMuon" ColumnName="NgayMuon" />
-          <ScalarProperty Name="NgayTra" ColumnName="NgayTra" />
-          <ScalarProperty Name="TinhTrangTra" ColumnName="TinhTrangTra" />
-          <ScalarProperty Name="MaTaiKhoan" ColumnName="MaTaiKhoan" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="LoaiTaiKhoan">
       <EntityTypeMapping TypeName="ThuVienSachModel.LoaiTaiKhoan">
         <MappingFragment StoreEntitySet="LoaiTaiKhoan">
@@ -131,6 +120,18 @@
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="HoVaTen" ColumnName="HoVaTen" />
           <ScalarProperty Name="MaTaiKhoan" ColumnName="MaTaiKhoan" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DonHang">
+      <EntityTypeMapping TypeName="ThuVienSachModel.DonHang">
+        <MappingFragment StoreEntitySet="DonHang">
+          <ScalarProperty Name="GhiChu" ColumnName="GhiChu" />
+          <ScalarProperty Name="MaTaiKhoan" ColumnName="MaTaiKhoan" />
+          <ScalarProperty Name="TinhTrangTra" ColumnName="TinhTrangTra" />
+          <ScalarProperty Name="NgayTra" ColumnName="NgayTra" />
+          <ScalarProperty Name="NgayMuon" ColumnName="NgayMuon" />
+          <ScalarProperty Name="MaDonHang" ColumnName="MaDonHang" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -1,0 +1,279 @@
+﻿
+@{
+    ViewBag.Title = "Quản lý mượn trả sách";
+    Layout = "~/Views/Layout/_LayoutAdmin.cshtml";
+}
+<div ng-controller="DonMuon">
+    <h1 class="text-center"><strong> Quản lý mượn trả sách</strong></h1>
+    <hr />
+    <div>
+        <div class="form-check form-check-inline" ng-hide="All">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" ng-click="Radio(1)">
+            <label class="form-check-label" for="inlineRadio1">Tất cả</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" ng-click="Radio(2)">
+            <label class="form-check-label" for="inlineRadio2">Ngày mượn</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" ng-click="Radio(3)">
+            <label class="form-check-label" for="inlineRadio3">Ngày trả</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" ng-click="Radio(4)">
+            <label class="form-check-label" for="inlineRadio4">Theo tài khoản</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio5" ng-click="Radio(5)">
+            <label class="form-check-label" for="inlineRadio5">Quá hạn trả</label>
+        </div>
+        <div class="form-check form-check-inline" ng-hide="Date">
+            <input class="form-control" type="date" ng-model="CheckDate" ng-change="ChangeDate(CheckDate)">
+        </div>
+        <div class="form-check form-check-inline" ng-hide="Text">
+            <input class="form-control" type="text" ng-model="CheckText" ng-keyup="ChangeText(CheckText)" placeholder="Nhập họ, tên hoặc email..">
+        </div>
+    </div>
+    <table class="table">
+        <thead class="thead">
+            <tr>
+                <th scope="col" style="width:4%">#</th>
+                <th scope="col">Tài khoản</th>
+                <th scope="col">Tình trạng</th>
+                <th scope="col">Ngày mượn</th>
+                <th scope="col">Ngày trả</th>
+                <th scope="col">
+                    <button ng-click="HDAdd()" class="btn btn-link" data-toggle="modal" data-target=".bd-example-modal-lg" title="Thêm mới sản phẩm">Thêm mới</button>
+                </th>
+            </tr>
+        </thead>
+        <tbody ng-repeat="n in DanhSach|range:(selectedPage-1)*pageSize|limitTo:pageSize">
+            <tr>
+                <th scope="row">{{(selectedPage-1)*pageSize + $index +1}}</th>
+                <td ng-repeat="TK in TaiKhoan| filter:{ 'MaTaiKhoan': n.MaTaiKhoan}:true">
+                    {{TK.Email}}
+                </td>
+                <td ng-repeat="TT in TinhTrang| filter:{ 'Id': n.TinhTrangTra}:true">
+                    {{TT.TenTinhTrang}}
+                </td>
+                <td>{{n.NgayMuon.replace("/Date(","").replace(")/","")|date:"dd/MM/yyyy '_' h:mma"}}</td>
+                <td>{{n.NgayTra.replace("/Date(","").replace(")/","")|date:"dd/MM/yyyy '_' h:mma"}}</td>
+                <td class="d-inline">
+                    <button class="fa fa-info btn  btn-outline-success" ng-click="XemChiTiet(n.MaDonHang,3)" aria-hidden="true" title="Xem thông tin chi tiết." data-toggle="modal" data-target=".bd-example-modal-lg"></button>&nbsp;
+                    <button class="fa fa-pencil-square-o btn btn-outline-success" aria-hidden="true" ng-click="XemChiTiet(n.MaDonHang,2)" title="Sửa tài khoản" data-toggle="modal" data-target=".bd-example-modal-lg"></button>&nbsp;
+                    <button class="fa fa-trash-o btn btn-outline-success" ng-click="XemChiTiet(n.MaDonHang,1)" aria-hidden="true" title="Xóa tài khoản." data-toggle="modal" data-target=".bd-example-modal-lg"></button>
+                </td>
+            </tr>
+        </tbody>
+        <tr>
+            <td colspan="5" class="ml-5">
+                <a class="btn btn-light" ng-class="PagePrevActive()" ng-click="goToPrev()"><small><<<</small></a>
+                <a class="btn btn-info" ng-class="PageActive($index+1)" ng-repeat="n in data=(DanhSach|pageCount:pageSize)" ng-click="toPage($index+1)">{{$index+1}}</a>
+                <a class="btn btn-light" ng-class="PageNextActive()" ng-click="goToNext()"><small>>>></small></a>
+            </td>
+        </tr>
+    </table>
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-content">
+                    <br />
+                    <h2 class="text-center"><strong>{{TieuDe}}</strong></h2>
+                </div>
+                <div class="modal-body pre-scrollable" ng-hide="ThemMoi">
+                    <form name="frmAdd">
+                        <div class="form-group">
+                            <label for="">Tài khoản</label>
+                            <div class="row" ng-switch="dataNew.MaTaiKhoan!=null">
+                                <div class="col-sm-6">
+                                    <input type="number" required ng-model="dataNew.MaTaiKhoan" class="form-control" placeholder="Điền thông tin..">
+                                </div>
+                                <div ng-switch-when="true" class="col-sm-6" ng-repeat="TK in TaiKhoan| filter:{ 'MaTaiKhoan': dataNew.MaTaiKhoan}:true">
+                                    <h2 class="text-center">Thông tin</h2>
+                                    <div class="form-inline">
+                                        <label class="col-sm-2 col-form-label"><strong>Họ và tên</strong> </label>
+                                        <div class="col-sm-10">
+                                            <p>
+                                                {{TK.HoVaTen}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="form-inline">
+                                        <label class="col-sm-2 col-form-label"><strong>Email</strong> </label>
+                                        <div class="col-sm-10">
+                                            <p>{{TK.Email}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-switch-when="false">
+                                    <p>Chưa chọn tài khoản.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Ngày trả</label>
+                            <input type="datetime-local" required ng-model="dataNew.NgayTra" min="{{dataEdit.NgayMuon}}" class="form-control" placeholder="Điền thông tin..">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Ghi chú</label>
+                            <input type="text" required ng-model="dataNew.GhiChu" class="form-control" placeholder="Điền thông tin..">
+                        </div>
+
+
+                    </form>
+                    <div class="form-group">
+                        <div class="col-sm-12"><h2 class="text-center">Danh sách sách mượn</h2></div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h4>Thêm mới</h4>
+                                <form name="frmChiTiet">
+                                    <div class="form-group form-inline">
+                                        <label class="col-sm-4 " for="">Mã sách</label>
+                                        <input class="col-sm-8 form-control" name="MaSach" min="1" type="number" required ng-model="MaSach" placeholder="Điền thông tin..">
+                                    </div>
+                                    <div class="form-group form-inline">
+                                        <label class="col-sm-4" for="">Số lượng</label>
+                                        <input class="col-sm-8 form-control" name="SoLuong" min="1" type="number" required ng-model="SoLuong" placeholder="Điền thông tin..">
+                                    </div>
+                                </form>
+                                
+                                <button class="fa fa-plus" ng-hide="frmChiTiet.$invalid" ng-click="AddDetail(MaSach,SoLuong)"></button>
+                            </div>
+                            <div class="col-sm-6">
+                                <h4>Đã Ghi</h4>
+                                <div class="form-group form-inline">
+                                    <table class="table">
+                                        <thead class="thead">
+                                            <tr>
+                                                <th scope="col" style="width:10%">#</th>
+                                                <th scope="col">Sách</th>
+                                                <th scope="col">Số lượng</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="xx in mang">
+                                                <th scope="row">{{$index +1}}</th>
+                                                <td>{{xx.MaSach}}</td>
+                                                <td>{{xx.SoLuong}}</td>
+                                                <td><button class="btn btn-info" ng-click="removeItem($index)"><i class="fa fa-remove"></i></button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                @*xem chi  tiết*@
+                <div class="modal-body pre-scrollable" ng-hide="ChiTiet">
+                    <div class="form-inline">
+                        <label class="col-sm-2 col-form-label"><strong>Tên tài khoản</strong> </label>
+                        <div class="col-sm-10">
+                            <p ng-repeat="TK in TaiKhoan| filter:{ 'MaTaiKhoan': dataInfo.MaTaiKhoan}:true">
+                                {{TK.HoVaTen}}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-inline">
+                        <label class="col-sm-2 col-form-label"><strong>Email</strong> </label>
+                        <div class="col-sm-10">
+                            <p ng-repeat="TK in TaiKhoan| filter:{ 'MaTaiKhoan': dataInfo.MaTaiKhoan}:true">
+                                {{TK.Email}}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-inline">
+                        <label class="col-sm-2 col-form-label"><strong>Số điện thoại</strong> </label>
+                        <div class="col-sm-10">
+                            <p ng-repeat="TK in TaiKhoan| filter:{ 'MaTaiKhoan': dataInfo.MaTaiKhoan}:true">
+                                {{TK.SoDienThoai}}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-inline">
+                        <label class="col-sm-2 col-form-label"><strong>Ngày mượn</strong> </label>
+                        <div class="col-sm-10">
+                            <p>{{dataInfo.NgayMuon.replace("/Date(","").replace(")/","")|date:"dd/MM/yyyy '_' h:mma"}}</p>
+                        </div>
+                    </div>
+                    <div class="form-inline">
+                        <label class="col-sm-2 col-form-label"><strong>Ngày trả</strong> </label>
+                        <div class="col-sm-10">
+                            <p>{{dataInfo.NgayTra.replace("/Date(","").replace(")/","")|date:"dd/MM/yyyy '_' h:mma"}}</p>
+                        </div>
+                    </div>
+                    <div class="form-inline">
+                        <label class="col-sm-2 col-form-label"><strong>Ghi chú</strong> </label>
+                        <div class="col-sm-10">
+                            <p>{{dataInfo.GhiChu}}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="col-sm-2 col-form-label"><strong>Chi tiết</strong> </label>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Tên sách</th>
+                                    <th scope="col">Số lượng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="s in ChiTietDonMuon">
+                                    <td ng-repeat="sa in Sach| filter:{ 'MaSach': s.MaSach}:true">
+                                        {{sa.TenSach}}
+                                    </td>
+                                    <td>{{s.SoLuong}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+                @*sua*@
+                <div class="modal-body pre-scrollable" ng-hide="Sua">
+                    <form name="frmEdit">
+                        <div class="form-group">
+                            <label for="">Tài khoản</label>
+                            <input type="number" required ng-model="dataEdit.MaTaiKhoan" class="form-control" placeholder="Điền thông tin..">
+
+                        </div>
+                        <div class="form-group">
+                            <label for="">Ngày trả</label>
+                            <input type="datetime-local" required ng-model="dataEdit.NgayTra" min="{{dataEdit.NgayMuon}}" class="form-control" placeholder="Điền thông tin..">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Tình trạng trả</label>
+                            <select name="ChuDe" ng-model="dataEdit.TinhTrangTra" required class="form-control">
+                                <option ng-repeat="tt in TinhTrang" value="{{tt.Id}}">{{tt.TenTinhTrang}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Ghi chú</label>
+                            <input type="text" required ng-model="dataEdit.GhiChu" class="form-control" placeholder="Điền thông tin..">
+                        </div>
+                    </form>
+                </div>
+                @*xóa*@
+                <div class="modal-body pre-scrollable" ng-hide="Xoa">
+                    <p ng-repeat="TK in TaiKhoan| filter:{ 'MaTaiKhoan': dataDelete.MaTaiKhoan}:true">
+                        Bạn có chắc muốn xóa thông tin đơn mượn ngày {{dataDelete.NgayMuon.replace("/Date(","").replace(")/","")|date:"dd/MM/yyyy '_' h:mma"}} của {{TK.HoVaTen}}
+                    </p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-hide="Xoa" data-dismiss="modal" ng-click="XoaDH(dataDelete)">Lưu</button>
+                    <button type="button" class="btn btn-primary" ng-hide="ThemMoi" ng-disabled="frmAdd.$invalid" data-dismiss="modal" ng-click="ThemDH(dataNew)">Lưu</button>
+                    <button type="button" class="btn btn-primary" ng-hide="Sua" ng-disabled="frmEdit.$invalid" data-dismiss="modal" ng-click="SuaDH(dataEdit)">Lưu</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="Thoat()">Thoát</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
