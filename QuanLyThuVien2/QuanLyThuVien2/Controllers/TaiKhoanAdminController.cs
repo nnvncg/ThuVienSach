@@ -14,7 +14,39 @@ namespace QuanLyThuVien2.Controllers
         ThuVienSachEntities db = new ThuVienSachEntities();
         public ActionResult TaiKhoan()
         {
+            if (Session["Login"] == null)
+            {
+                return Redirect("/TaiKhoanAdmin/Login");
+            }
             return View();
+        }
+        public ActionResult Login()
+        {
+            if (Session["Login"] != null)
+            {
+                return Redirect("/DonMuonAdmin/DonMuon");
+            }
+            return View();
+        }
+        public JsonResult DangNhap(string email,string password)
+        {
+            var tk = db.TaiKhoan.FirstOrDefault(n => n.Email == email && n.MatKhau == password&&n.LoaiTaiKhoan!=2);
+            if (tk == null)
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                Session["Login"] = 1;
+                Session["HoTen"] = tk.HoVaTen;
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public ActionResult DangXuat()
+        {
+            Session.Remove("Login");
+            Session.Remove("HoTen");
+            return RedirectToAction("Login");
         }
         public JsonResult DanhSachTaiKhoan()
         {

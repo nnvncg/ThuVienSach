@@ -2,7 +2,30 @@
 
 var myCntr = angular.module("Controller", ['ngNotify']);
 
+myCntr.controller("Login", function ($scope, $http, $notify, $window) {
+    $scope.Load = true;
+    $scope.Login = function (email, password) {
+        $scope.Load = false;
+        $http(
+        {
+            method: "POST",
+            url: "/TaiKhoanAdmin/DangNhap",
+            dataType: 'json',
+            data: { email: email, password: password }
+        }).then(function (response) {
+            if (response.data) {
+                $window.location.href = '/DonMuonAdmin/DonMuon';
+            }
+            else {
+                $scope.Load = true;
 
+                $notify.setTime(2).setPosition('bottom-right').showCloseButton(true).showProgressBar(true);
+                $notify.setPosition('bottom-left');
+                $notify.error('Đăng nhập', 'Đăng nhập thất bại!');
+            }
+        });
+    }
+});
 myCntr.controller("Sach", function ($scope, $http, Upload, $notify, $window) {
     getAllBook();
     $scope.pageSize = 5;
@@ -852,6 +875,147 @@ myCntr.controller("DonMuon", function ($scope, $http, Upload, $notify, $window) 
             url: "/TinhTrangAdmin/DanhSach",
         }).then(function (response) {
             $scope.TinhTrang = response.data;
+        })
+    };
+});
+myCntr.controller("PhanQuyen", function ($scope, $http, Upload, $notify, $window) {
+
+    //Phân quyền
+    //XemPhanQuyen();
+    //function XemPhanQuyen() {
+    //    $http(
+    //    {
+    //        method: "Get",
+    //        url: "/LoaiTKAdmin/DanhSach",
+    //    }).then(function (response) {
+    //        $scope.LoaiTK = response.data;
+    //    })
+    //};
+
+    $scope.pageSize = 8;
+    $scope.selectedPage = 1;
+    $scope.selectPage = function (page) {
+        $scope.selectedPage = page;
+    };
+    $scope.toPage = function (page) {
+        $scope.selectedPage = page;
+    };
+    $scope.goToPrev = function () {
+        if ($scope.selectedPage > 1)
+            $scope.selectedPage--;
+    };
+    $scope.goToNext = function (page) {
+        if ($scope.data != null) {
+            if ($scope.selectedPage < $scope.data.length)
+                $scope.selectedPage++;
+        }
+
+    };
+    $scope.PagePrevActive = function () {
+        return $scope.selectedPage == 1 ? 'ng-hide' : 'ng-show';
+    };
+    $scope.PageNextActive = function (page) {
+        if ($scope.data != null) {
+            return $scope.selectedPage == $scope.data.length ? 'ng-hide' : 'ng-show';
+        }
+        return 'ng-hide';
+    };
+    $scope.PageActive = function (page) {
+        if ($scope.data.length == 1) {
+            return $scope.selectedPage == page ? 'ng-hide' : '';
+        }
+        else {
+
+            return $scope.selectedPage == page ? 'btn-danger' : '';
+        }
+    };
+    LoaiTaiKhoan();
+    function LoaiTaiKhoan() {
+        $http(
+        {
+            method: "Get",
+            url: "/LoaiTKAdmin/DanhSach",
+        }).then(function (response) {
+            $scope.LoaiTK = response.data;
+        })
+    };
+    TatCaQuyen();
+    function TatCaQuyen() {
+        $http(
+        {
+            method: "Get",
+            url: "/PhanQuyenAdmin/DanhSachQuyen",
+        }).then(function (response) {
+            $scope.DSTatCaQuyen = response.data;
+        })
+    };
+    $scope.ChiTiet = function (id,ten) {
+        $scope.Ten = ten;
+        $scope.Ltk = id;
+        QuyenTheoLoaiTK(id);
+        QuyenChuaChon(id);
+    };
+    function QuyenTheoLoaiTK(id) {
+        $http(
+        {
+            method: "POST",
+            url: "/PhanQuyenAdmin/DanhSach",
+            dataType: 'json',
+            data: { ltk: id }
+        }).then(function (response) {
+            $scope.DSQuyen = response.data;           
+        })
+        $http(
+        {
+            method: "POST",
+            url: "/PhanQuyenAdmin/DanhSachChuaChon",
+            dataType: 'json',
+            data: { id: id }
+        }).then(function (response) {
+            $scope.DSQuyenChuaChon = response.data;
+        })
+    }
+
+    $scope.Them = function (quyen) {
+        $http(
+        {
+            method: "POST",
+            url: "/PhanQuyenAdmin/ThemPhanQuyen",
+            dataType: 'json',
+            data: { ltk: $scope.Ltk, Quyen: quyen }
+        }).then(function (response) {
+            if (response.data) {
+                QuyenTheoLoaiTK($scope.Ltk);
+                $notify.setTime(2).setPosition('bottom-right').showCloseButton(true).showProgressBar(true);
+                $notify.setPosition('bottom-left');
+                $notify.success('Thêm quyền', 'Thêm quyền thành công!');
+            }
+            else {
+                $notify.setTime(2).setPosition('bottom-right').showCloseButton(true).showProgressBar(true);
+                $notify.setPosition('bottom-left');
+                $notify.error('Thêm quyền', 'Thêm quyền thất bại!');
+            }
+        })
+    };
+    $scope.Xoa = function (quyen) {
+        $http(
+        {
+            method: "POST",
+            url: "/PhanQuyenAdmin/XoaPhanQuyen",
+            dataType: 'json',
+            data: { ltk: $scope.Ltk, Quyen: quyen }
+        }).then(function (response) {
+            if (response.data) {
+                QuyenTheoLoaiTK($scope.Ltk);
+                $notify.setTime(2).setPosition('bottom-right').showCloseButton(true).showProgressBar(true);
+                $notify.setPosition('bottom-left');
+                $notify.success('Xóa quyền', 'Xóa quyền thành công!');
+            }
+            else {
+                $notify.setTime(2).setPosition('bottom-right').showCloseButton(true).showProgressBar(true);
+                $notify.setPosition('bottom-left');
+                $notify.error('Xóa quyền', 'Xóa quyền thất bại!');
+            }
         })
     };
 });

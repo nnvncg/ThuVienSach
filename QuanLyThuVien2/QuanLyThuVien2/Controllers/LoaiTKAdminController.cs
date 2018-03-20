@@ -13,11 +13,16 @@ namespace QuanLyThuVien2.Controllers
         // GET: TinhTrangAdmin
         public ActionResult Index()
         {
+            if (Session["Login"] == null)
+            {
+                return Redirect("/TaiKhoanAdmin/Login");
+            }
             return View();
         }
         public JsonResult DanhSach()
         {
             return Json(db.LoaiTaiKhoan.ToList(), JsonRequestBehavior.AllowGet);
         }
+
     }
 }

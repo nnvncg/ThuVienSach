@@ -12,18 +12,13 @@ namespace QuanLyThuVien2.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Quyen
+    public partial class PhanQuyen
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Quyen()
-        {
-            this.PhanQuyen = new HashSet<PhanQuyen>();
-        }
-    
         public int MaQuyen { get; set; }
-        public string TenQuyen { get; set; }
+        public int MaLoaiTK { get; set; }
+        public Nullable<bool> KichHoat { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PhanQuyen> PhanQuyen { get; set; }
+        public virtual LoaiTaiKhoan LoaiTaiKhoan { get; set; }
+        public virtual Quyen Quyen { get; set; }
     }
 }

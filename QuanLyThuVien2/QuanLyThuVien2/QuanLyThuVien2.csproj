@@ -139,8 +139,10 @@
     <Content Include="AngularJS\FilterScript.js" />
     <Content Include="AngularJS\Module.js" />
     <Content Include="Content\css\animate.css" />
+    <Content Include="Content\css\bootstrap-cerulean.min.css" />
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\charisma-app.css" />
     <Content Include="Content\css\jasny-bootstrap.min.css" />
     <Content Include="Content\css\owl.carousel.css" />
     <Content Include="Content\css\owl.theme.css" />
@@ -232,6 +234,7 @@
     <Content Include="Content\js\bootstrap.min.js" />
     <Content Include="Content\js\jasny-bootstrap.min.js" />
     <Content Include="Content\js\jquery.1.11.1.js" />
+    <Content Include="Content\js\jquery.min.js" />
     <Content Include="Content\js\main.js" />
     <Content Include="Content\js\modernizr.custom.js" />
     <Content Include="Content\js\owl.carousel.js" />
@@ -271,6 +274,7 @@
     <Compile Include="Controllers\LoaiSachController.cs" />
     <Compile Include="Controllers\NhaXBController.cs" />
     <Compile Include="Controllers\NhaXuatBanController.cs" />
+    <Compile Include="Controllers\PhanQuyenAdminController.cs" />
     <Compile Include="Controllers\SachController.cs" />
     <Compile Include="Controllers\SachesAdminController.cs" />
     <Compile Include="Controllers\TaiKhoanAdminController.cs" />
@@ -311,6 +315,9 @@
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\NhaXuatBan.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PhanQuyen.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Quyen.cs">
@@ -404,6 +411,9 @@
     <Content Include="Views\ChuDeAdmin\ChuDe.cshtml" />
     <Content Include="Views\TaiKhoanAdmin\TaiKhoan.cshtml" />
     <Content Include="Views\DonMuonAdmin\DonMuon.cshtml" />
+    <Content Include="Views\PhanQuyenAdmin\PhanQuyen.cshtml" />
+    <Content Include="Views\Layout\_LayoutLoginAdmin.cshtml" />
+    <Content Include="Views\TaiKhoanAdmin\Login.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
