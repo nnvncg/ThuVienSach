@@ -12,13 +12,13 @@ namespace QuanLyThuVien2.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class DanhDau
+    public partial class PhanQuyen
     {
-        public int MaTaiKhoan { get; set; }
-        public int MaSach { get; set; }
-        public Nullable<System.DateTime> NgayTao { get; set; }
+        public int MaQuyen { get; set; }
+        public int MaLoaiTK { get; set; }
+        public Nullable<bool> KichHoat { get; set; }
     
-        public virtual Sach Sach { get; set; }
-        public virtual TaiKhoan TaiKhoan { get; set; }
+        public virtual LoaiTaiKhoan LoaiTaiKhoan { get; set; }
+        public virtual Quyen Quyen { get; set; }
     }
 }

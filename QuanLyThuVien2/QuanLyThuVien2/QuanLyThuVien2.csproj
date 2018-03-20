@@ -139,8 +139,10 @@
     <Content Include="AngularJS\FilterScript.js" />
     <Content Include="AngularJS\Module.js" />
     <Content Include="Content\css\animate.css" />
+    <Content Include="Content\css\bootstrap-cerulean.min.css" />
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\charisma-app.css" />
     <Content Include="Content\css\jasny-bootstrap.min.css" />
     <Content Include="Content\css\owl.carousel.css" />
     <Content Include="Content\css\owl.theme.css" />
@@ -232,6 +234,7 @@
     <Content Include="Content\js\bootstrap.min.js" />
     <Content Include="Content\js\jasny-bootstrap.min.js" />
     <Content Include="Content\js\jquery.1.11.1.js" />
+    <Content Include="Content\js\jquery.min.js" />
     <Content Include="Content\js\main.js" />
     <Content Include="Content\js\modernizr.custom.js" />
     <Content Include="Content\js\owl.carousel.js" />
@@ -257,6 +260,7 @@
     <Content Include="scripts\angular.min.js" />
     <Content Include="scripts\jquery-1.9.1.min.js" />
     <Content Include="scripts\ng-file-upload.min.js" />
+    <Content Include="scripts\ngDatepicker.min.js" />
     <Content Include="scripts\notify.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -264,15 +268,19 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ChuDeAdminController.cs" />
+    <Compile Include="Controllers\DonMuonAdminController.cs" />
     <Compile Include="Controllers\DonMuonController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoaiSachController.cs" />
     <Compile Include="Controllers\NhaXBController.cs" />
     <Compile Include="Controllers\NhaXuatBanController.cs" />
+    <Compile Include="Controllers\PhanQuyenAdminController.cs" />
     <Compile Include="Controllers\SachController.cs" />
     <Compile Include="Controllers\SachesAdminController.cs" />
-    <Compile Include="Controllers\TaiKhoanController.cs" />
+    <Compile Include="Controllers\TaiKhoanAdminController.cs" />
     <Compile Include="Controllers\TimKiemController.cs" />
+    <Compile Include="Controllers\LoaiTKAdminController.cs" />
+    <Compile Include="Controllers\TinhTrangAdminController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -307,6 +315,9 @@
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\NhaXuatBan.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PhanQuyen.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Quyen.cs">
@@ -398,7 +409,11 @@
     <Content Include="scripts\jquery-1.9.1.min.map" />
     <Content Include="Views\NhaXuatBan\NhaXuatBan.cshtml" />
     <Content Include="Views\ChuDeAdmin\ChuDe.cshtml" />
-    <Content Include="Views\TaiKhoan\TaiKhoan.cshtml" />
+    <Content Include="Views\TaiKhoanAdmin\TaiKhoan.cshtml" />
+    <Content Include="Views\DonMuonAdmin\DonMuon.cshtml" />
+    <Content Include="Views\PhanQuyenAdmin\PhanQuyen.cshtml" />
+    <Content Include="Views\Layout\_LayoutLoginAdmin.cshtml" />
+    <Content Include="Views\TaiKhoanAdmin\Login.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -410,6 +425,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\DonMuon\" />
     <Folder Include="Views\SachAdmin\" />
+    <Folder Include="Views\TinhTrangAdmin\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

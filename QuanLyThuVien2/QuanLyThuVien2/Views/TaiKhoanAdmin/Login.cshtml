@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "Đăng nhập";
+    Layout = "~/Views/Layout/_LayoutLoginAdmin.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 center login-header">
+        <h2>Chào mừng tới thư viện sách Đà Lạt.</h2>
+    </div>
+    <!--/span-->
+</div><!--/row-->
+<div class="row">
+    <div class="well col-md-5 center login-box">
+        <form class="form-horizontal">
+            <fieldset>
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user red"></i></span>
+                    <input type="email" class="form-control" ng-model="Email" placeholder="Email">
+                </div>
+                <div class="clearfix"></div><br>
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i></span>
+                    <input type="password" ng-model="Password" class="form-control" placeholder="Mật khẩu">
+                </div>
+                <div class="clearfix"></div>
+                <div class="clearfix"></div>
+                <p class="center col-md-5">
+                    <button ng-hide="!Load" class="btn btn-primary" ng-click="Login(Email,Password)">Đăng nhập</button>
+                </p>
+                <div ng-hide="Load">
+                    <p>Đang sử lý</p>
+                    <i class="fa fa-spinner fa-2x fa-spin text-danger"></i>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <!--/span-->
+</div><!--/row-->

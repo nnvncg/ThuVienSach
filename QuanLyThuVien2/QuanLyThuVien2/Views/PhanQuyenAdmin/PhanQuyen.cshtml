@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewBag.Title = "Phân quyền cho loại tài khoản";
+    Layout = "~/Views/Layout/_LayoutAdmin.cshtml";
+}
+<div ng-controller="PhanQuyen">
+    <hr />
+    <h1 class="text-center"><strong> Quản lý phân quyền</strong></h1>
+    <hr />
+    <input type="text" class="form-control" ng-model="searchInput" placeholder="Nhập tên cần tìm.." />
+    <br />
+    <div class="row">
+        <div class="card col-sm-3" ng-repeat="n in LoaiTK|filter:searchInput|range:(selectedPage-1)*pageSize|limitTo:pageSize">
+            <div class="card-header">
+                <h3>Loại: </h3> {{n.TenLoaiTK}}
+            </div>
+            <div class="card-body"ng-switch="n.MaLoai==1">
+                <button class="btn btn-info" ng-switch-when="true" disabled  title="Loại tài khoản này không thể sửa quyền">Xem phân quyền</button>
+                <button class="btn btn-info" ng-switch-when="false" data-toggle="modal" data-target="#PhanQuyen" ng-click="ChiTiet(n.MaLoai,n.TenLoaiTK)">Xem phân quyền</button>
+            </div>
+        </div>
+    </div>
+    <div colspan="5" class="ml-5">
+        <a class="btn btn-light" ng-class="PagePrevActive()" ng-click="goToPrev()"><small><<<</small></a>
+        <a class="btn btn-info" ng-class="PageActive($index+1)" ng-repeat="n in data=(LoaiTK|filter:searchInput|pageCount:pageSize)" ng-click="toPage($index+1)">{{$index+1}}</a>
+        <a class="btn btn-light" ng-class="PageNextActive()" ng-click="goToNext()"><small>>>></small></a>
+    </div>
+    <br />
+    <div class="modal fade" id="PhanQuyen" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">Chi tiết phân quyền</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h4 class="text-center">Tên loại tài khoản {{Ten}}</h4>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h4 class="text-center">Quyền chưa chọn</h4>
+                            <hr />
+                            <div class="row pre-scrollable">
+                                <div class="form-check form-check-inline mb-2 " ng-repeat="x in DSQuyenChuaChon">
+                                    <button class="btn btn-outline-success fa fa-plus" ng-click="Them(x.MaQuyen)"></button>&nbsp;
+                                    <label class="form-check-label" for="inlineCheckbox1-{{x.MaQuyen}}"> {{x.TenQuyen}}</label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-5">
+                            <h4 class="text-center">Quyền hiện tại</h4>
+                            <hr />
+                            <div class="row pre-scrollable" ng-switch="DSQuyen.length==0">
+                                <p class="text-danger" ng-switch-when="true">Không có quyền nào</p>
+                                <div class="form-check form-check-inline" ng-repeat="t in DSQuyen">
+                                    <button class="btn btn-outline-warning fa fa-remove mb-2" ng-click="Xoa(t.MaQuyen)"></button>&nbsp;
+                                    <p class="form-check-label" ng-repeat="q in DSTatCaQuyen| filter:{ 'MaQuyen':  t.MaQuyen}:true">{{q.TenQuyen}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Lưu lại</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

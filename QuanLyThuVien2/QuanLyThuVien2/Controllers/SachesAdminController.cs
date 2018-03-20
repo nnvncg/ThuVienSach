@@ -19,6 +19,10 @@ namespace QuanLyThuVien2.Controllers
         // GET: SachesAdmin
         public ActionResult Index()
         {
+            if (Session["Login"] == null)
+            {
+                return Redirect("/TaiKhoanAdmin/Login");
+            }
             return View();
         }
 
@@ -127,7 +131,7 @@ namespace QuanLyThuVien2.Controllers
                 sach.AnhBia = "";
             }
             sach.NgayCapNhat = DateTime.Now;
-            db.Sach.Add(sach);
+            db.Entry(sach).State =EntityState.Modified;
             db.SaveChanges();
             return Json(true, JsonRequestBehavior.AllowGet);
         }

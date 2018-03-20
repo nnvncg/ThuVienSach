@@ -17,13 +17,13 @@ namespace QuanLyThuVien2.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Quyen()
         {
-            this.LoaiTaiKhoan = new HashSet<LoaiTaiKhoan>();
+            this.PhanQuyen = new HashSet<PhanQuyen>();
         }
     
         public int MaQuyen { get; set; }
         public string TenQuyen { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LoaiTaiKhoan> LoaiTaiKhoan { get; set; }
+        public virtual ICollection<PhanQuyen> PhanQuyen { get; set; }
     }
 }

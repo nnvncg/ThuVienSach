@@ -17,8 +17,8 @@ namespace QuanLyThuVien2.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TaiKhoan()
         {
-            this.DonHang = new HashSet<DonHang>();
             this.DanhDau = new HashSet<DanhDau>();
+            this.DonHang = new HashSet<DonHang>();
         }
     
         public int MaTaiKhoan { get; set; }
@@ -28,11 +28,12 @@ namespace QuanLyThuVien2.Models
         public string DiaChi { get; set; }
         public Nullable<int> LoaiTaiKhoan { get; set; }
         public string MatKhau { get; set; }
+        public bool KichHoat { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DanhDau> DanhDau { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DonHang> DonHang { get; set; }
         public virtual LoaiTaiKhoan LoaiTaiKhoan1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DanhDau> DanhDau { get; set; }
     }
 }

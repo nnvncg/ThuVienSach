@@ -13,6 +13,10 @@ namespace QuanLyThuVien2.Controllers
 
         public ActionResult ChuDe()
         {
+            if (Session["Login"] == null)
+            {
+                return Redirect("/TaiKhoanAdmin/Login");
+            }
             return View();
         }
         public JsonResult DanhSachChuDe()

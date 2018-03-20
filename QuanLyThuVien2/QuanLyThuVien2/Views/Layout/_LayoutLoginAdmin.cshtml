@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>@ViewBag.Title </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- The styles -->
+    <link href="~/Content/css/bootstrap-cerulean.min.css" rel="stylesheet" />
+    <link href="~/Content/css/charisma-app.css" rel="stylesheet" />
+    <!-- jQuery -->
+    <link rel="stylesheet" type="text/css" href="~/Content/font-awesome-4.2.0/css/font-awesome.css">
+
+    <script src="~/Content/js/jquery.min.js"></script>
+    <!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!-- The fav icon -->
+    <link rel="shortcut icon" href="~/Content/img/favicon.ico">
+</head>
+<body ng-app="myApp">
+    <div class="ch-container" ng-controller="Login">
+        <div class="row">
+        @RenderBody()
+            
+        </div><!--/fluid-row-->
+    </div><!--/.fluid-container-->
+    <!-- external javascript -->
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <script src="~/scripts/jquery-1.9.1.min.js"></script>
+
+    <script src="//cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
+
+    <script src="~/scripts/angular.min.js"></script>
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-sanitize.js"></script>
+    <script src="~/scripts/ng-file-upload.min.js"></script>
+
+    <script src="~/AngularJS/Module.js"></script>
+    <script src="~/AngularJS/FilterScript.js"></script>
+    <script src="~/AngularJS/Controller.js"></script>
+    <script src="~/scripts/notify.min.js"></script>
+    <script src="~/scripts/angular-ckeditor.js"></script>
+    <script src="~/scripts/angular-notify.js"></script>
+</body>
+</html>

@@ -15,6 +15,10 @@ namespace QuanLyThuVien2.Controllers
 
         public ActionResult NhaXuatBan()
         {
+            if (Session["Login"] == null)
+            {
+                return Redirect("/TaiKhoanAdmin/Login");
+            }
             return View();
         }
         public JsonResult DanhSachNXB()

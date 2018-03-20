@@ -30,10 +30,11 @@
       <PropertyRef Name="MaDonHang" />
     </Key>
     <Property Name="MaDonHang" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="NgayMuon" Type="datetime" />
-    <Property Name="NgayTra" Type="datetime" />
+    <Property Name="NgayMuon" Type="datetime" Nullable="false" />
+    <Property Name="NgayTra" Type="datetime" Nullable="false" />
     <Property Name="TinhTrangTra" Type="int" />
     <Property Name="MaTaiKhoan" Type="int" />
+    <Property Name="GhiChu" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="LoaiTaiKhoan">
     <Key>
@@ -59,6 +60,7 @@
     </Key>
     <Property Name="MaQuyen" Type="int" Nullable="false" />
     <Property Name="MaLoaiTK" Type="int" Nullable="false" />
+    <Property Name="KichHoat" Type="bit" />
   </EntityType>
   <EntityType Name="Quyen">
     <Key>
@@ -105,6 +107,7 @@
     <Property Name="DiaChi" Type="nvarchar" MaxLength="150" />
     <Property Name="LoaiTaiKhoan" Type="int" />
     <Property Name="MatKhau" Type="nvarchar" MaxLength="50" />
+    <Property Name="KichHoat" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="TinhTrang">
     <Key>
