@@ -60,6 +60,7 @@
     </Key>
     <Property Name="MaQuyen" Type="int" Nullable="false" />
     <Property Name="MaLoaiTK" Type="int" Nullable="false" />
+    <Property Name="KichHoat" Type="bit" />
   </EntityType>
   <EntityType Name="Quyen">
     <Key>

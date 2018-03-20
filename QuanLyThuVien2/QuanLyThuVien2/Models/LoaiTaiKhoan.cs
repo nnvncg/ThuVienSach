@@ -17,7 +17,7 @@ namespace QuanLyThuVien2.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public LoaiTaiKhoan()
         {
-            this.Quyen = new HashSet<Quyen>();
+            this.PhanQuyen1 = new HashSet<PhanQuyen>();
             this.TaiKhoan = new HashSet<TaiKhoan>();
         }
     
@@ -26,7 +26,7 @@ namespace QuanLyThuVien2.Models
         public Nullable<int> PhanQuyen { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Quyen> Quyen { get; set; }
+        public virtual ICollection<PhanQuyen> PhanQuyen1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TaiKhoan> TaiKhoan { get; set; }
     }

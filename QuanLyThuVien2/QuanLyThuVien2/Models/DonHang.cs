@@ -11,8 +11,7 @@ namespace QuanLyThuVien2.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.Web.Script.Serialization;
-
+    
     public partial class DonHang
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -27,12 +26,10 @@ namespace QuanLyThuVien2.Models
         public Nullable<int> TinhTrangTra { get; set; }
         public Nullable<int> MaTaiKhoan { get; set; }
         public string GhiChu { get; set; }
-        
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietDonHang> ChiTietDonHang { get; set; }
-        [ScriptIgnore]
         public virtual TaiKhoan TaiKhoan { get; set; }
-        
         public virtual TinhTrang TinhTrang { get; set; }
     }
 }

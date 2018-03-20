@@ -14,6 +14,10 @@ namespace QuanLyThuVien2.Controllers
         ThuVienSachEntities db = new ThuVienSachEntities();
         public ActionResult DonMuon()
         {
+            if (Session["Login"] == null)
+            {
+                return Redirect("/TaiKhoanAdmin/Login");
+            }
             return View();
         }
         public JsonResult DanhSach()

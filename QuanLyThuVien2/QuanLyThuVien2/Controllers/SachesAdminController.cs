@@ -19,6 +19,10 @@ namespace QuanLyThuVien2.Controllers
         // GET: SachesAdmin
         public ActionResult Index()
         {
+            if (Session["Login"] == null)
+            {
+                return Redirect("/TaiKhoanAdmin/Login");
+            }
             return View();
         }
 

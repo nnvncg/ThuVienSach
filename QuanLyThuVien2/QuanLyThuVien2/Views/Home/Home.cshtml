@@ -15,7 +15,9 @@
     {
         <div class="col-sm-4 mb-2 rounded">
             <a href="@Url.Action("XemChiTiet","Sach",new {id=item.MaSach})">
-                <img class="col-sm-12 mt-1 rounded border border-primary" src="~/Content/img/Sach/@item.AnhBia" alt="@item.TenSach">
+                <img class="col-sm-11 mt-1 rounded border border-primary" src="~/Content/img/Sach/@item.AnhBia" onmouseover="bigImg(this)" onmouseout="normalImg(this)" alt="@item.TenSach">
+                
+                 @*<img class="col-sm-12 mt-1 rounded border border-primary" src="~/Content/img/Sach/@item.AnhBia" onmouseover="bigImg(this)" onmouseout="normalImg(this)"  alt="@item.TenSach">*@
             </a>
             <a href="@Url.Action("XemChiTiet","Sach",new {id=item.MaSach})">
                 <span><small>@item.TenSach</small></span>
@@ -34,3 +36,15 @@
         </div>
     </nav>
 </div>
+<script>
+    function bigImg(x) {
+
+        x.className = "col-sm-12 mt-1 rounded border border-warning";
+    }
+
+    function normalImg(x) {
+
+        x.className = "col-sm-11 mt-1 rounded border border-primary";
+
+    }
+</script>

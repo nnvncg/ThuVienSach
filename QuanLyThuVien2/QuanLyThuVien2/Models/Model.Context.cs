@@ -19,6 +19,7 @@ namespace QuanLyThuVien2.Models
             : base("name=ThuVienSachEntities")
         {
             base.Configuration.ProxyCreationEnabled = false;
+
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -28,9 +29,7 @@ namespace QuanLyThuVien2.Models
     
         public virtual DbSet<ChiTietDonHang> ChiTietDonHang { get; set; }
         public virtual DbSet<ChuDe> ChuDe { get; set; }
-        public virtual DbSet<LoaiTaiKhoan> LoaiTaiKhoan { get; set; }
         public virtual DbSet<NhaXuatBan> NhaXuatBan { get; set; }
-        public virtual DbSet<Quyen> Quyen { get; set; }
         public virtual DbSet<TacGia> TacGia { get; set; }
         public virtual DbSet<ThamGia> ThamGia { get; set; }
         public virtual DbSet<DanhDau> DanhDau { get; set; }
@@ -38,5 +37,8 @@ namespace QuanLyThuVien2.Models
         public virtual DbSet<Sach> Sach { get; set; }
         public virtual DbSet<TaiKhoan> TaiKhoan { get; set; }
         public virtual DbSet<DonHang> DonHang { get; set; }
+        public virtual DbSet<LoaiTaiKhoan> LoaiTaiKhoan { get; set; }
+        public virtual DbSet<PhanQuyen> PhanQuyen { get; set; }
+        public virtual DbSet<Quyen> Quyen { get; set; }
     }
 }

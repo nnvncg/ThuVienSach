@@ -19,16 +19,6 @@
     <Property Name="TenChuDe" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Sach" Relationship="ThuVienSachModel.FK_Sach_ChuDe" FromRole="ChuDe" ToRole="Sach" />
   </EntityType>
-  <EntityType Name="LoaiTaiKhoan">
-    <Key>
-      <PropertyRef Name="MaLoai" />
-    </Key>
-    <Property Name="MaLoai" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="TenLoaiTK" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="PhanQuyen" Type="Int32" />
-    <NavigationProperty Name="Quyen" Relationship="Self.PhanQuyen" FromRole="LoaiTaiKhoan" ToRole="Quyen" />
-    <NavigationProperty Name="TaiKhoan" Relationship="ThuVienSachModel.FK_TaiKhoan_LoaiTaiKhoan" FromRole="LoaiTaiKhoan" ToRole="TaiKhoan" />
-  </EntityType>
   <EntityType Name="NhaXuatBan">
     <Key>
       <PropertyRef Name="MaNXB" />
@@ -38,14 +28,6 @@
     <Property Name="DiaChi" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
     <Property Name="DienThoai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Sach" Relationship="ThuVienSachModel.FK_Sach_NhaXuatBan" FromRole="NhaXuatBan" ToRole="Sach" />
-  </EntityType>
-  <EntityType Name="Quyen">
-    <Key>
-      <PropertyRef Name="MaQuyen" />
-    </Key>
-    <Property Name="MaQuyen" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="TenQuyen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="LoaiTaiKhoan" Relationship="Self.PhanQuyen" FromRole="Quyen" ToRole="LoaiTaiKhoan" />
   </EntityType>
   <EntityType Name="TacGia">
     <Key>
@@ -82,25 +64,15 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="PhanQuyen">
-    <End Role="LoaiTaiKhoan" Type="Self.LoaiTaiKhoan" Multiplicity="*" />
-    <End Role="Quyen" Type="Self.Quyen" Multiplicity="*" />
-  </Association>
   <EntityContainer Name="ThuVienSachEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="ChiTietDonHang" EntityType="Self.ChiTietDonHang" />
     <EntitySet Name="ChuDe" EntityType="Self.ChuDe" />
-    <EntitySet Name="LoaiTaiKhoan" EntityType="Self.LoaiTaiKhoan" />
     <EntitySet Name="NhaXuatBan" EntityType="Self.NhaXuatBan" />
-    <EntitySet Name="Quyen" EntityType="Self.Quyen" />
     <EntitySet Name="TacGia" EntityType="Self.TacGia" />
     <EntitySet Name="ThamGia" EntityType="Self.ThamGia" />
     <AssociationSet Name="FK_ThamGia_TacGia" Association="Self.FK_ThamGia_TacGia">
       <End Role="TacGia" EntitySet="TacGia" />
       <End Role="ThamGia" EntitySet="ThamGia" />
-    </AssociationSet>
-    <AssociationSet Name="PhanQuyen" Association="Self.PhanQuyen">
-      <End Role="LoaiTaiKhoan" EntitySet="LoaiTaiKhoan" />
-      <End Role="Quyen" EntitySet="Quyen" />
     </AssociationSet>
     <EntitySet Name="DanhDau" EntityType="ThuVienSachModel.DanhDau" />
     <EntitySet Name="TinhTrang" EntityType="ThuVienSachModel.TinhTrang" />
@@ -130,10 +102,6 @@
       <End Role="TaiKhoan" EntitySet="TaiKhoan" />
       <End Role="DanhDau" EntitySet="DanhDau" />
     </AssociationSet>
-    <AssociationSet Name="FK_TaiKhoan_LoaiTaiKhoan" Association="ThuVienSachModel.FK_TaiKhoan_LoaiTaiKhoan">
-      <End Role="LoaiTaiKhoan" EntitySet="LoaiTaiKhoan" />
-      <End Role="TaiKhoan" EntitySet="TaiKhoan" />
-    </AssociationSet>
     <EntitySet Name="DonHang" EntityType="ThuVienSachModel.DonHang" />
     <AssociationSet Name="FK_ChiTietDonHang_DonHang" Association="ThuVienSachModel.FK_ChiTietDonHang_DonHang">
       <End Role="DonHang" EntitySet="DonHang" />
@@ -146,6 +114,21 @@
     <AssociationSet Name="FK_DonHang_TinhTrang" Association="ThuVienSachModel.FK_DonHang_TinhTrang">
       <End Role="TinhTrang" EntitySet="TinhTrang" />
       <End Role="DonHang" EntitySet="DonHang" />
+    </AssociationSet>
+    <EntitySet Name="LoaiTaiKhoan" EntityType="ThuVienSachModel.LoaiTaiKhoan" />
+    <EntitySet Name="PhanQuyen" EntityType="ThuVienSachModel.PhanQuyen" />
+    <EntitySet Name="Quyen" EntityType="ThuVienSachModel.Quyen" />
+    <AssociationSet Name="FK_PhanQuyen_LoaiTaiKhoan" Association="ThuVienSachModel.FK_PhanQuyen_LoaiTaiKhoan">
+      <End Role="LoaiTaiKhoan" EntitySet="LoaiTaiKhoan" />
+      <End Role="PhanQuyen" EntitySet="PhanQuyen" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TaiKhoan_LoaiTaiKhoan" Association="ThuVienSachModel.FK_TaiKhoan_LoaiTaiKhoan">
+      <End Role="LoaiTaiKhoan" EntitySet="LoaiTaiKhoan" />
+      <End Role="TaiKhoan" EntitySet="TaiKhoan" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PhanQuyen_Quyen" Association="ThuVienSachModel.FK_PhanQuyen_Quyen">
+      <End Role="Quyen" EntitySet="Quyen" />
+      <End Role="PhanQuyen" EntitySet="PhanQuyen" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="DanhDau">
@@ -262,8 +245,8 @@
     <Property Name="MatKhau" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="KichHoat" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="DanhDau" Relationship="ThuVienSachModel.FK_DanhDau_TaiKhoan" FromRole="TaiKhoan" ToRole="DanhDau" />
-    <NavigationProperty Name="LoaiTaiKhoan1" Relationship="ThuVienSachModel.FK_TaiKhoan_LoaiTaiKhoan" FromRole="TaiKhoan" ToRole="LoaiTaiKhoan" />
     <NavigationProperty Name="DonHang" Relationship="ThuVienSachModel.FK_DonHang_TaiKhoan" FromRole="TaiKhoan" ToRole="DonHang" />
+    <NavigationProperty Name="LoaiTaiKhoan1" Relationship="ThuVienSachModel.FK_TaiKhoan_LoaiTaiKhoan" FromRole="TaiKhoan" ToRole="LoaiTaiKhoan" />
   </EntityType>
   <Association Name="FK_DanhDau_TaiKhoan">
     <End Type="ThuVienSachModel.TaiKhoan" Role="TaiKhoan" Multiplicity="1" />
@@ -274,18 +257,6 @@
       </Principal>
       <Dependent Role="DanhDau">
         <PropertyRef Name="MaTaiKhoan" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_TaiKhoan_LoaiTaiKhoan">
-    <End Type="ThuVienSachModel.LoaiTaiKhoan" Role="LoaiTaiKhoan" Multiplicity="0..1" />
-    <End Type="ThuVienSachModel.TaiKhoan" Role="TaiKhoan" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="LoaiTaiKhoan">
-        <PropertyRef Name="MaLoai" />
-      </Principal>
-      <Dependent Role="TaiKhoan">
-        <PropertyRef Name="LoaiTaiKhoan" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -336,6 +307,71 @@
       </Principal>
       <Dependent Role="DonHang">
         <PropertyRef Name="TinhTrangTra" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="LoaiTaiKhoan">
+    <Key>
+      <PropertyRef Name="MaLoai" />
+    </Key>
+    <Property Name="MaLoai" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenLoaiTK" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PhanQuyen" Type="Int32" />
+    <NavigationProperty Name="PhanQuyen1" Relationship="ThuVienSachModel.FK_PhanQuyen_LoaiTaiKhoan" FromRole="LoaiTaiKhoan" ToRole="PhanQuyen" />
+    <NavigationProperty Name="TaiKhoan" Relationship="ThuVienSachModel.FK_TaiKhoan_LoaiTaiKhoan" FromRole="LoaiTaiKhoan" ToRole="TaiKhoan" />
+  </EntityType>
+  <EntityType Name="PhanQuyen">
+    <Key>
+      <PropertyRef Name="MaQuyen" />
+      <PropertyRef Name="MaLoaiTK" />
+    </Key>
+    <Property Name="MaQuyen" Type="Int32" Nullable="false" />
+    <Property Name="MaLoaiTK" Type="Int32" Nullable="false" />
+    <Property Name="KichHoat" Type="Boolean" />
+    <NavigationProperty Name="LoaiTaiKhoan" Relationship="ThuVienSachModel.FK_PhanQuyen_LoaiTaiKhoan" FromRole="PhanQuyen" ToRole="LoaiTaiKhoan" />
+    <NavigationProperty Name="Quyen" Relationship="ThuVienSachModel.FK_PhanQuyen_Quyen" FromRole="PhanQuyen" ToRole="Quyen" />
+  </EntityType>
+  <EntityType Name="Quyen">
+    <Key>
+      <PropertyRef Name="MaQuyen" />
+    </Key>
+    <Property Name="MaQuyen" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenQuyen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="PhanQuyen" Relationship="ThuVienSachModel.FK_PhanQuyen_Quyen" FromRole="Quyen" ToRole="PhanQuyen" />
+  </EntityType>
+  <Association Name="FK_PhanQuyen_LoaiTaiKhoan">
+    <End Type="ThuVienSachModel.LoaiTaiKhoan" Role="LoaiTaiKhoan" Multiplicity="1" />
+    <End Type="ThuVienSachModel.PhanQuyen" Role="PhanQuyen" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LoaiTaiKhoan">
+        <PropertyRef Name="MaLoai" />
+      </Principal>
+      <Dependent Role="PhanQuyen">
+        <PropertyRef Name="MaLoaiTK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TaiKhoan_LoaiTaiKhoan">
+    <End Type="ThuVienSachModel.LoaiTaiKhoan" Role="LoaiTaiKhoan" Multiplicity="0..1" />
+    <End Type="ThuVienSachModel.TaiKhoan" Role="TaiKhoan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LoaiTaiKhoan">
+        <PropertyRef Name="MaLoai" />
+      </Principal>
+      <Dependent Role="TaiKhoan">
+        <PropertyRef Name="LoaiTaiKhoan" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PhanQuyen_Quyen">
+    <End Type="ThuVienSachModel.Quyen" Role="Quyen" Multiplicity="1" />
+    <End Type="ThuVienSachModel.PhanQuyen" Role="PhanQuyen" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Quyen">
+        <PropertyRef Name="MaQuyen" />
+      </Principal>
+      <Dependent Role="PhanQuyen">
+        <PropertyRef Name="MaQuyen" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
